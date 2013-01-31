@@ -62,6 +62,21 @@ The first time the tiq method is called, Sidetiq will automatically spin up
 it's clock thread and enqueue jobs for their next occurrence using
 `#perform_at`. Note that by default Sidekiq only polls every 15 seconds.
 
+## CONFIGURATION
+
+```ruby
+Sidetiq.configure do |config|
+  # Thread priority of the clock thread (default: Thread.main.priority as
+  # defined when Sidetiq is loaded)
+  config.priority = 2
+
+  # Clock tick resolution in seconds (default: 0.2)
+  config.resolution = 0.5
+end
+```
+
+## CONSIDERATIONS
+
 If workers are spread across multiple machines multiple jobs might be enqueued
 at the same time. This can be avoided by using a locking library for Sidekiq,
 such as [sidekiq-unique-jobs](https://github.com/form26/sidekiq-unique-jobs).
