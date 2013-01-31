@@ -1,6 +1,6 @@
 module Sidetiq
   configure do |config|
-    config.priority = Thread.current.priority
+    config.priority = Thread.main.priority
     config.resolution = 0.2
   end
 
