@@ -1,0 +1,9 @@
+lib/*.bundle
+coverage
+rdoc
+doc
+.yardoc
+.bundle
+Gemfile.lock
+pkg
+tmp
