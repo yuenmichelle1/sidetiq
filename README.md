@@ -16,7 +16,8 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
 - Sidetiq uses a locking mechanism (based on `setnx` and `pexpire`) internally
   so Sidetiq clocks can run in each Sidekiq process without interfering with
-  each other.
+  each other (tested with sub-second polling of scheduled jobs by Sidekiq and
+  Sidetiq clock rates above 100hz).
 
 ## DEPENDENCIES
 
@@ -86,11 +87,14 @@ it's clock thread and enqueue jobs for their next occurrence using
 ```ruby
 Sidetiq.configure do |config|
   # Thread priority of the clock thread (default: Thread.main.priority as
-  # defined when Sidetiq is loaded)
+  # defined when Sidetiq is loaded).
   config.priority = 2
 
-  # Clock tick resolution in seconds (default: 0.2)
+  # Clock tick resolution in seconds (default: 1).
   config.resolution = 0.5
+
+  # Clock locking key expiration in ms (default: 1000).
+  config.lock_expire = 100
 end
 ```
 
