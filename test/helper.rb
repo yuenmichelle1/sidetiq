@@ -1,9 +1,15 @@
 require 'simplecov'
 SimpleCov.start { add_filter "/test/" }
+
 require 'minitest/autorun'
 require 'mocha/setup'
-require 'sidetiq'
+require 'rack/test'
+
+require 'sidekiq'
 require 'sidekiq/testing'
+
+require 'sidetiq'
+require 'sidetiq/web'
 
 # Stub out Clock#start! so we don't actually loop
 module Sidetiq

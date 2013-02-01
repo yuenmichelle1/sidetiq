@@ -77,6 +77,17 @@ Sidetiq.configure do |config|
 end
 ```
 
+## WEB EXTENSION
+
+Sidetiq includes an extension for Sidekiq's web interface. It will not be
+loaded by default, so it will have to be required manually:
+
+```ruby
+require 'sidetiq/web'
+```
+
+![Screenshot](http://cl.ly/image/1X0q3v153F3Q)
+
 ## CONSIDERATIONS
 
 If workers are spread across multiple machines multiple jobs might be enqueued
