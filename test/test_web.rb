@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-class TestWeb < MiniTest::Unit::TestCase
+class TestWeb < Sidetiq::TestCase
   include Rack::Test::Methods
 
   class Worker

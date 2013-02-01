@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-class TestConfig < MiniTest::Unit::TestCase
+class TestConfig < Sidetiq::TestCase
   def setup
     @saved = Sidetiq.config
     Sidetiq.config = OpenStruct.new

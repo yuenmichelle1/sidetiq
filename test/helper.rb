@@ -4,6 +4,7 @@ SimpleCov.start { add_filter "/test/" }
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'rack/test'
+require 'mock_redis'
 
 require 'sidekiq'
 require 'sidekiq/testing'
@@ -20,3 +21,10 @@ end
 
 # Keep the test output clean
 Sidekiq.logger = Logger.new(nil)
+
+class Sidetiq::TestCase < MiniTest::Unit::TestCase
+  def setup
+    Sidekiq.redis { |r| r.flushall }
+  end
+end
+

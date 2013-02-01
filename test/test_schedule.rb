@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-class TestSchedule < MiniTest::Unit::TestCase
+class TestSchedule < Sidetiq::TestCase
   def test_super
     assert_equal IceCube::Schedule, Sidetiq::Schedule.superclass
   end

@@ -10,8 +10,13 @@ Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
 - Flexible DSL based on [ice_cube](http://seejohnrun.github.com/ice_cube/)
+
 - High-resolution timer using `clock_gettime(3)` (or `mach_absolute_time()` on
   Apple Mac OS X), allowing for accurate sub-second clock ticks.
+
+- Sidetiq uses a locking mechanism (based on `setnx` and `pexpire`) internally
+  so Sidetiq clocks can run in each Sidekiq process without interfering with
+  each other.
 
 ## DEPENDENCIES
 
@@ -38,8 +43,8 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  # Every other month on the first monday and last tuesday at 12 o'clock.
-  tiq { monthly(2).day_of_week(1 => [1], 2 => [-1]).hour_of_day(12) }
+  # Daily at midnight
+  tiq { daily }
 end
 ```
 
@@ -57,6 +62,18 @@ class MyWorker
     # Every fourth year in Februrary
     yearly(2).month_of_year(:february)
   end
+end
+```
+
+Or complex schedules:
+
+```ruby
+class MyWorker
+  include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  # Every other month on the first monday and last tuesday at 12 o'clock.
+  tiq { monthly(2).day_of_week(1 => [1], 2 => [-1]).hour_of_day(12) }
 end
 ```
 
@@ -89,12 +106,6 @@ require 'sidetiq/web'
 ### SCREENSHOT
 
 ![Screenshot](http://f.cl.ly/items/1P2u1v091F3V1n381g2I/Screen%20Shot%202013-02-01%20at%2012.16.17.png)
-
-## CONSIDERATIONS
-
-If workers are spread across multiple machines multiple jobs might be enqueued
-at the same time. This can be avoided by using a locking library for Sidekiq,
-such as [sidekiq-unique-jobs](https://github.com/form26/sidekiq-unique-jobs).
 
 ## CONTRIBUTE
 

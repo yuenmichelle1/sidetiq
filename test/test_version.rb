@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-class TestVersion < MiniTest::Unit::TestCase
+class TestVersion < Sidetiq::TestCase
   def test_major
     assert_instance_of Fixnum, Sidetiq::VERSION::MAJOR
   end
