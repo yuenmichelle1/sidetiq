@@ -1,19 +1,18 @@
+# Run with `sidekiq -r /path/to/simple.rb`
+
+require 'sidekiq'
 require 'sidetiq'
 
-# We're only loading this so we don't actually have to connect to redis.
-require 'sidekiq/testing'
+Sidekiq.options[:poll_interval] = 1
 
-class ExampleWorker
+class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  def self.perform_at(time)
-    puts "Enqueued to run at #{time}"
-  end
+  tiq { secondly }
 
-  # Run every 2 seconds
-  tiq { secondly(2) }
+  def perform(*args)
+    Sidekiq.logger.info "#perform"
+  end
 end
 
-puts "Hit C-c to quit."
-sleep 1000000
