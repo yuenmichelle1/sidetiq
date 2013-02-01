@@ -59,7 +59,7 @@ class MyWorker
     # Every third year in March
     yearly(3).month_of_year(:march)
 
-    # Every fourth year in Februrary
+    # Every fourth year in February
     yearly(2).month_of_year(:february)
   end
 end
