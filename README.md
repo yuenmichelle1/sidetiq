@@ -86,6 +86,8 @@ loaded by default, so it will have to be required manually:
 require 'sidetiq/web'
 ```
 
+### SCREENSHOT
+
 ![Screenshot](http://f.cl.ly/items/1P2u1v091F3V1n381g2I/Screen%20Shot%202013-02-01%20at%2012.16.17.png)
 
 ## CONSIDERATIONS
