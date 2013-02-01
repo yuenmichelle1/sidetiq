@@ -2,11 +2,9 @@ module Sidetiq
   module Schedulable
     module ClassMethods
       def tiq(&block)
-        clock  = Sidetiq::Clock.instance
-        worker = block.send(:binding).eval('self')
-
+        clock = Sidetiq::Clock.instance
         clock.synchronize do
-          clock.schedule_for(worker).instance_eval(&block)
+          clock.schedule_for(self).instance_eval(&block)
         end
       end
     end
