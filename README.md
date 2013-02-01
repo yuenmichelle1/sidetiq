@@ -1,7 +1,7 @@
 Sidetiq
 =======
 
-[![Build Status](https://travis-ci.org/tobiassvn/sidetiq.png)](https://travis-ci.org/tobiassvn/[sidetiq])
+[![Build Status](https://travis-ci.org/tobiassvn/sidetiq.png)](https://travis-ci.org/tobiassvn/sidetiq)
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 
