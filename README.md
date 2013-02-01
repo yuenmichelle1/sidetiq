@@ -55,7 +55,7 @@ class MyWorker
     yearly(3).month_of_year(:march)
 
     # Every fourth year in Februrary
-    yearly(2).month_of_year(:februrary)
+    yearly(2).month_of_year(:february)
   end
 end
 ```
