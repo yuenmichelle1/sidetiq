@@ -13,14 +13,19 @@ module Sidetiq
       end
 
       app.get "/sidetiq" do
-        @schedules = Sidetiq::Clock.instance.schedules
+        clock = Sidetiq::Clock.instance
+        @schedules = clock.schedules
+        @time = clock.gettime
         slim :sidetiq
       end
 
       app.get "/sidetiq/:name" do
         halt 404 unless (name = params[:name])
 
-        schedules = Sidetiq::Clock.instance.schedules
+        clock = Sidetiq::Clock.instance
+        schedules = clock.schedules
+
+        @time = clock.gettime
 
         @worker, @schedule = schedules.select do |worker, schedule|
           worker.name == name

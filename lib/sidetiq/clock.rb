@@ -3,13 +3,14 @@ module Sidetiq
     config.priority = Thread.main.priority
     config.resolution = 1
     config.lock_expire = 1000
+    config.utc = false
   end
 
   class Clock
     include Singleton
     include MonitorMixin
 
-    START_TIME = Time.local(2010, 1, 1)
+    START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
 
     attr_reader :schedules
 
@@ -32,6 +33,10 @@ module Sidetiq
           end
         end
       end
+    end
+
+    def gettime
+      Sidetiq.config.utc ? clock_gettime.utc : clock_gettime
     end
 
     private

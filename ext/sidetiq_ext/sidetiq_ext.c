@@ -92,6 +92,6 @@ void Init_sidetiq_ext()
         msidetiq = rb_define_module("Sidetiq");
         esidetiq_error = rb_define_class_under(msidetiq, "Error", rb_eStandardError);
         csidetiq_clock = rb_define_class_under(msidetiq, "Clock", rb_cObject);
-        rb_define_method(csidetiq_clock, "gettime", sidetiq_gettime, 0);
+        rb_define_private_method(csidetiq_clock, "clock_gettime", sidetiq_gettime, 0);
 }
 

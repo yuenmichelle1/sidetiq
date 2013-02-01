@@ -15,7 +15,7 @@ header.row
           = worker.name
         td= worker.get_sidekiq_options['queue']
         td
-          == relative_time(schedule.next_occurrence)
+          == relative_time(schedule.next_occurrence(@time))
         td
           a href="#{root_path}sidetiq/#{worker.name}" Details
 - else

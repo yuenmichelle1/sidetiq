@@ -13,6 +13,13 @@ class TestClock < Sidetiq::TestCase
     refute_nil clock.gettime.tv_nsec
   end
 
+  def test_gettime_utc
+    refute clock.gettime.utc?
+    Sidetiq.config.utc = true
+    assert clock.gettime.utc?
+    Sidetiq.config.utc = false
+  end
+
   class FakeWorker; end
 
   def test_enqueues_jobs_by_schedule

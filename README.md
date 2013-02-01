@@ -95,6 +95,9 @@ Sidetiq.configure do |config|
 
   # Clock locking key expiration in ms (default: 1000).
   config.lock_expire = 100
+
+  # When `true` uses UTC instead of local times (default: false)
+  config.utc = false
 end
 ```
 
