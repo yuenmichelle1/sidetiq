@@ -4,7 +4,6 @@ SimpleCov.start { add_filter "/test/" }
 require 'minitest/autorun'
 require 'mocha/setup'
 require 'rack/test'
-require 'mock_redis'
 
 require 'sidekiq'
 require 'sidekiq/testing'
