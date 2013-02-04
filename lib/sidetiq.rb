@@ -18,3 +18,7 @@ require 'sidetiq/schedule'
 require 'sidetiq/schedulable'
 require 'sidetiq/version'
 
+# The Sidetiq namespace.
+module Sidetiq
+end
+
