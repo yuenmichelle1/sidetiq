@@ -2,20 +2,14 @@ require 'sidekiq/web'
 
 module Sidetiq
   module Web
-    def self.registered(app)
-      app.helpers do
-        def find_template(view, *args, &block)
-          path = File.expand_path(File.join('..', 'views'), __FILE__)
-          super(path, *args, &block)
-          super
-        end
-      end
+    VIEWS = File.expand_path('views', File.dirname(__FILE__))
 
+    def self.registered(app)
       app.get "/sidetiq" do
         clock = Sidetiq::Clock.instance
         @schedules = clock.schedules
         @time = clock.gettime
-        slim :sidetiq
+        slim File.read(File.join(VIEWS, 'sidetiq.slim'))
       end
 
       app.get "/sidetiq/:name" do
@@ -30,7 +24,7 @@ module Sidetiq
           worker.name == name
         end.flatten
 
-        slim :sidetiq_details
+        slim File.read(File.join(VIEWS, 'sidetiq_details.slim'))
       end
     end
   end
