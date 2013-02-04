@@ -21,7 +21,7 @@ module Sidetiq
     # Public: Returns the clock thread.
     attr_reader :thread
 
-    def self.method_missing(meth, *args, &block)
+    def self.method_missing(meth, *args, &block) # :nodoc:
       instance.__send__(meth, *args, &block)
     end
 
