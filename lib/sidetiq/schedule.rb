@@ -1,4 +1,5 @@
 module Sidetiq
+  # Internal: Recurrence schedules.
   class Schedule < IceCube::Schedule
     def method_missing(meth, *args, &block)
       if IceCube::Rule.respond_to?(meth)
