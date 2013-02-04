@@ -1,8 +1,16 @@
 require_relative 'helper'
 
 class TestClock < Sidetiq::TestCase
+  class FakeWorker;
+  end
+
   def clock
     @clock ||= Sidetiq::Clock.instance
+  end
+
+  def test_delegates_to_instance
+    Sidetiq::Clock.instance.expects(:foo).once
+    Sidetiq::Clock.foo
   end
 
   def test_gettime_seconds
@@ -19,8 +27,6 @@ class TestClock < Sidetiq::TestCase
     assert clock.gettime.utc?
     Sidetiq.config.utc = false
   end
-
-  class FakeWorker; end
 
   def test_enqueues_jobs_by_schedule
     schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)

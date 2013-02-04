@@ -14,6 +14,10 @@ module Sidetiq
 
     attr_reader :schedules
 
+    def self.method_missing(meth, *args, &block)
+      instance.__send__(meth, *args, &block)
+    end
+
     def initialize
       super
       @schedules = {}
