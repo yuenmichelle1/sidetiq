@@ -12,7 +12,7 @@ module Sidetiq
 
     START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
 
-    attr_reader :schedules
+    attr_reader :schedules, :thread
 
     def self.method_missing(meth, *args, &block)
       instance.__send__(meth, *args, &block)
@@ -40,6 +40,26 @@ module Sidetiq
 
     def gettime
       Sidetiq.config.utc ? clock_gettime.utc : clock_gettime
+    end
+
+    def start!
+      return if ticking?
+
+      Sidekiq.logger.info "Sidetiq::Clock start"
+      @thread = Thread.start { clock { tick } }
+      @thread.abort_on_exception = true
+      @thread.priority = Sidetiq.config.resolution
+    end
+
+    def stop!
+      if ticking?
+        @thread.kill
+        Sidekiq.logger.info "Sidetiq::Clock stop"
+      end
+    end
+
+    def ticking?
+      @thread && @thread.alive?
     end
 
     private
@@ -71,13 +91,6 @@ module Sidetiq
           Sidekiq.logger.debug "Sidetiq::Clock unlock #{lock} #{Thread.current.inspect}"
         end
       end
-    end
-
-    def start!
-      Sidekiq.logger.info "Sidetiq::Clock start"
-      thr = Thread.start { clock { tick } }
-      thr.abort_on_exception = true
-      thr.priority = Sidetiq.config.resolution
     end
 
     def clock

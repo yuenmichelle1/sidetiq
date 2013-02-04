@@ -9,6 +9,25 @@ class TestClock < Sidetiq::TestCase
     Sidetiq::Clock.foo
   end
 
+  def test_start_stop
+    refute clock.ticking?
+    assert_nil clock.thread
+
+    clock.start!
+    Thread.pass
+    sleep 0.01
+
+    assert clock.ticking?
+    assert_kind_of Thread, clock.thread
+
+    clock.stop!
+    Thread.pass
+    sleep 0.01
+
+    refute clock.ticking?
+    refute clock.thread.alive?
+  end
+
   def test_gettime_seconds
     assert_equal clock.gettime.tv_sec, Time.now.tv_sec
   end
