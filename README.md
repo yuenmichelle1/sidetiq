@@ -110,16 +110,7 @@ Sidetiq.configure do |config|
 end
 ```
 
-## WEB EXTENSION
-
-Sidetiq includes an extension for Sidekiq's web interface. It will not be
-loaded by default, so it will have to be required manually:
-
-```ruby
-require 'sidetiq/web'
-```
-
-### NOTES
+## NOTES
 
 By default Sidekiq uses a 15 second polling interval to check if scheduled
 jobs are due. If a recurring job has to run more often than that you should
@@ -127,6 +118,15 @@ lower this value.
 
 ```ruby
 Sidekiq.options[:poll_interval] = 1
+```
+
+## WEB EXTENSION
+
+Sidetiq includes an extension for Sidekiq's web interface. It will not be
+loaded by default, so it will have to be required manually:
+
+```ruby
+require 'sidetiq/web'
 ```
 
 ### SCREENSHOT
