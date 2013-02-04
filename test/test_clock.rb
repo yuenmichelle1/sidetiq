@@ -4,10 +4,6 @@ class TestClock < Sidetiq::TestCase
   class FakeWorker;
   end
 
-  def clock
-    @clock ||= Sidetiq::Clock.instance
-  end
-
   def test_delegates_to_instance
     Sidetiq::Clock.instance.expects(:foo).once
     Sidetiq::Clock.foo

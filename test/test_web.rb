@@ -20,10 +20,6 @@ class TestWeb < Sidetiq::TestCase
     Sidekiq::Web
   end
 
-  def clock
-    Sidetiq::Clock.instance
-  end
-
   def test_home_tab
     get '/'
     assert_equal 200, last_response.status

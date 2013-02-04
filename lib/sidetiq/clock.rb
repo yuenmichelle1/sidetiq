@@ -21,7 +21,6 @@ module Sidetiq
     def initialize
       super
       @schedules = {}
-      start!
     end
 
     def schedule_for(worker)

@@ -11,19 +11,16 @@ require 'sidekiq/testing'
 require 'sidetiq'
 require 'sidetiq/web'
 
-# Stub out Clock#start! so we don't actually loop
-module Sidetiq
-  class Clock
-    def start!; end
-  end
-end
-
 # Keep the test output clean
 Sidekiq.logger = Logger.new(nil)
 
 class Sidetiq::TestCase < MiniTest::Unit::TestCase
   def setup
     Sidekiq.redis { |r| r.flushall }
+  end
+
+  def clock
+    @clock ||= Sidetiq::Clock.instance
   end
 end
 
