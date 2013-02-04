@@ -78,9 +78,17 @@ class MyWorker
 end
 ```
 
-The first time the tiq method is called, Sidetiq will automatically spin up
-it's clock thread and enqueue jobs for their next occurrence using
-`#perform_at`. Note that by default Sidekiq only polls every 15 seconds.
+To start Sidetiq, simply call `Sidetiq::Clock.start!` in a server specific
+configuration block:
+
+```ruby
+Sidekiq.configure_server do |config|
+  Sidetiq::Clock.start!
+end
+```
+
+Additionally, Sidetiq includes a middleware that will check if the clock
+thread is still alive and restart it if necessary.
 
 ## CONFIGURATION
 
