@@ -6,27 +6,52 @@ module Sidetiq
     config.utc = false
   end
 
+  # Public: The Sidetiq clock.
   class Clock
     include Singleton
     include MonitorMixin
 
+    # Public: Start time offset from epoch used for calculating run
+    # times in the Sidetiq schedules.
     START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
 
-    attr_reader :schedules, :thread
+    # Public: Returns a hash of Sidetiq::Schedule instances.
+    attr_reader :schedules
+
+    # Public: Returns the clock thread.
+    attr_reader :thread
 
     def self.method_missing(meth, *args, &block)
       instance.__send__(meth, *args, &block)
     end
 
-    def initialize
+    def initialize # :nodoc:
       super
       @schedules = {}
     end
 
+    # Public: Get the schedule for `worker`.
+    #
+    # worker - A Sidekiq::Worker class
+    #
+    # Examples
+    #
+    #   schedule_for(MyWorker)
+    #   # => Sidetiq::Schedule
+    #
+    # Returns a Sidetiq::Schedule instances.
     def schedule_for(worker)
       schedules[worker] ||= Sidetiq::Schedule.new(START_TIME)
     end
 
+    # Public: Issue a single clock tick.
+    #
+    # Examples
+    #
+    #   tick
+    #   # => Hash of Sidetiq::Schedule objects
+    #
+    # Returns a hash of Sidetiq::Schedule instances.
     def tick
       @tick = gettime
       synchronize do
@@ -38,10 +63,29 @@ module Sidetiq
       end
     end
 
+    # Public: Returns the current time used by the clock.
+    #
+    # Sidetiq::Clock uses `clock_gettime()` on UNIX systems and
+    # `mach_absolute_time()` on Mac OS X.
+    #
+    # Examples
+    #
+    #   gettime
+    #   # => 2013-02-04 12:00:45 +0000
+    #
+    # Returns a Time instance.
     def gettime
       Sidetiq.config.utc ? clock_gettime.utc : clock_gettime
     end
 
+    # Public: Starts the clock unless it is already running.
+    #
+    # Examples
+    #
+    #   start!
+    #   # => Thread
+    #
+    # Returns the Thread instance of the clock thread.
     def start!
       return if ticking?
 
@@ -49,8 +93,17 @@ module Sidetiq
       @thread = Thread.start { clock { tick } }
       @thread.abort_on_exception = true
       @thread.priority = Sidetiq.config.resolution
+      @thread
     end
 
+    # Public: Stops the clock if it is running.
+    #
+    # Examples
+    #
+    #   stop!
+    #   # => nil
+    #
+    # Returns nil.
     def stop!
       if ticking?
         @thread.kill
@@ -58,6 +111,18 @@ module Sidetiq
       end
     end
 
+    # Public: Returns the status of the clock.
+    #
+    # Examples
+    #
+    #   ticking?
+    #   # => false
+    #
+    #   start!
+    #   ticking?
+    #   # => true
+    #
+    # Returns true or false.
     def ticking?
       @thread && @thread.alive?
     end
