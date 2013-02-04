@@ -4,6 +4,3 @@ rvm:
   - 2.0.0
 before_script:
   - bundle exec rake compile
-matrix:
-  allow_failures:
-    - rvm: 2.0.0
