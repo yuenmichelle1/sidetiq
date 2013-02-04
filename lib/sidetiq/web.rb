@@ -2,7 +2,6 @@ require 'sidekiq/web'
 
 module Sidetiq
   module Web
-
     def self.registered(app)
       app.helpers do
         def find_template(view, *args, &block)
