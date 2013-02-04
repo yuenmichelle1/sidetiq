@@ -5,6 +5,10 @@ require 'sidetiq'
 
 Sidekiq.options[:poll_interval] = 1
 
+Sidekiq.configure_server do |config|
+  Sidetiq::Clock.start!
+end
+
 class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
