@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = Sidetiq::VERSION::STRING
   gem.authors       = ["Tobias Svensson"]
   gem.email         = ["tob@tobiassvensson.co.uk"]
-  gem.description   = "High-resolution job scheduler for Sidekiq"
+  gem.description   = "Recurring jobs for Sidekiq"
   gem.summary       = gem.description
   gem.homepage      = "http://github.com/tobiassvn/sidetiq"
   gem.license       = "MIT"
