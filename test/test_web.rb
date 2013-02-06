@@ -20,6 +20,15 @@ class TestWeb < Sidetiq::TestCase
     Sidekiq::Web
   end
 
+  def host
+    last_request.host
+  end
+
+  def setup
+    super
+    Worker.jobs.clear
+  end
+
   def test_home_tab
     get '/'
     assert_equal 200, last_response.status
@@ -53,6 +62,13 @@ class TestWeb < Sidetiq::TestCase
     schedule.next_occurrences(10).each do |time|
       assert_match /#{time.getutc.to_s}/, last_response.body
     end
+  end
+
+  def test_trigger
+    post "/sidetiq/#{Worker.name}/trigger"
+    assert_equal 302, last_response.status
+    assert_equal "http://#{host}/sidetiq", last_response.location
+    assert_equal 1, Worker.jobs.size
   end
 end
 

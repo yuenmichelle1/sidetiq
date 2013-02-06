@@ -5,26 +5,44 @@ module Sidetiq
     VIEWS = File.expand_path('views', File.dirname(__FILE__))
 
     def self.registered(app)
+      app.helpers do
+        def sidetiq_clock
+          Sidetiq::Clock.instance
+        end
+
+        def sidetiq_schedules
+          sidetiq_clock.schedules
+        end
+      end
+
       app.get "/sidetiq" do
-        clock = Sidetiq::Clock.instance
-        @schedules = clock.schedules
-        @time = clock.gettime
+        @schedules = sidetiq_schedules
+        @time = sidetiq_clock.gettime
         slim File.read(File.join(VIEWS, 'sidetiq.slim'))
       end
 
       app.get "/sidetiq/:name" do
         halt 404 unless (name = params[:name])
 
-        clock = Sidetiq::Clock.instance
-        schedules = clock.schedules
+        @time = sidetiq_clock.gettime
 
-        @time = clock.gettime
-
-        @worker, @schedule = schedules.select do |worker, schedule|
+        @worker, @schedule = sidetiq_schedules.select do |worker, schedule|
           worker.name == name
         end.flatten
 
         slim File.read(File.join(VIEWS, 'sidetiq_details.slim'))
+      end
+
+      app.post "/sidetiq/:name/trigger" do
+        halt 404 unless (name = params[:name])
+
+        worker, _ = sidetiq_schedules.select do |worker, schedule|
+          worker.name == name
+        end.flatten
+
+        worker.perform_async
+
+        redirect "#{root_path}sidetiq"
       end
     end
   end

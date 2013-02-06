@@ -12,12 +12,13 @@ header.row
     - @schedules.each do |worker, schedule|
       tr
         td
-          = worker.name
+          a href="#{root_path}sidetiq/#{worker.name}"= worker.name
         td= worker.get_sidekiq_options['queue']
         td
           == relative_time(schedule.next_occurrence(@time))
         td
-          a href="#{root_path}sidetiq/#{worker.name}" Details
+          form action="#{root_path}sidetiq/#{worker.name}/trigger" method="post"
+            input.btn.btn-danger.btn-small type="submit" name="trigger" value="Trigger" data-confirm="Are you sure you want to trigger this job?"
 - else
   .alert.alert-success No recurring jobs found.
 
