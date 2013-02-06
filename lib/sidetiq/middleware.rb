@@ -6,7 +6,10 @@ module Sidetiq
 
     def call(*args)
       # Restart the clock if the thread died.
-      @clock.start! if !@clock.ticking?
+      if !@clock.ticking?
+        Sidekiq.logger.warn "Sidetiq::Clock thread died. Restarting..."
+        @clock.start!
+      end
       yield
     end
   end
