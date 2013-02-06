@@ -147,13 +147,13 @@ module Sidetiq
     def synchronize_clockworks(lock)
       Sidekiq.redis do |redis|
         if redis.setnx(lock, 1)
-          Sidekiq.logger.debug "Sidetiq::Clock lock #{lock} #{Thread.current.inspect}"
+          Sidekiq.logger.debug "Sidetiq::Clock lock #{lock}"
 
           redis.pexpire(lock, Sidetiq.config.lock_expire)
           yield redis
           redis.del(lock)
 
-          Sidekiq.logger.debug "Sidetiq::Clock unlock #{lock} #{Thread.current.inspect}"
+          Sidekiq.logger.debug "Sidetiq::Clock unlock #{lock}"
         end
       end
     end
