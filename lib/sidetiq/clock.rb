@@ -160,10 +160,19 @@ module Sidetiq
 
     def clock
       loop do
-        yield
-        Thread.pass
-        sleep Sidetiq.config.resolution
+        sleep_time = time { yield }
+
+        if sleep_time > 0
+          Thread.pass
+          sleep sleep_time
+        end
       end
+    end
+
+    def time
+      start = gettime
+      yield
+      Sidetiq.config.resolution - (gettime.to_f - start.to_f)
     end
   end
 end
