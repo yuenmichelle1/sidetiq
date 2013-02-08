@@ -12,4 +12,3 @@ matrix:
   allow_failures:
     - rvm: 1.9.2
     - rvm: jruby-19mode
-    - rvm: rbx-19mode
