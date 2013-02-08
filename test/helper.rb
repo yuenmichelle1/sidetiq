@@ -1,5 +1,7 @@
-require 'simplecov'
-SimpleCov.start { add_filter "/test/" }
+if ENV["COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start { add_filter "/test/" }
+end
 
 require 'minitest/autorun'
 require 'mocha/setup'
