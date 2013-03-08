@@ -20,5 +20,5 @@ Gem::Specification.new do |gem|
   gem.extensions    = ['ext/sidetiq_ext/extconf.rb']
 
   gem.add_dependency 'sidekiq',  '~> 2.8.0'
-  gem.add_dependency 'ice_cube', '~> 0.9.3'
+  gem.add_dependency 'ice_cube', '~> 0.10.0'
 end
