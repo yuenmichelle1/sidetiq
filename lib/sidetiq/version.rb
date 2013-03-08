@@ -5,10 +5,10 @@ module Sidetiq
     MAJOR = 0
 
     # Public: Sidetiq minor version number.
-    MINOR = 1
+    MINOR = 2
 
     # Public: Sidetiq patch level.
-    PATCH = 5
+    PATCH = 0
 
     # Public: String representation of the current Sidetiq version.
     STRING = [MAJOR, MINOR, PATCH].compact.join('.')
