@@ -29,7 +29,7 @@ module Sidetiq
 
     private
 
-      def get_timestamp key
+      def get_timestamp(key)
         Sidekiq.redis do |redis|
           (redis.get("sidetiq:#{name}:#{key}") || -1).to_f
         end
