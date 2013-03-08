@@ -92,7 +92,7 @@ module Sidetiq
       Sidekiq.logger.info "Sidetiq::Clock start"
       @thread = Thread.start { clock { tick } }
       @thread.abort_on_exception = true
-      @thread.priority = Sidetiq.config.resolution
+      @thread.priority = Sidetiq.config.priority
       @thread
     end
 
