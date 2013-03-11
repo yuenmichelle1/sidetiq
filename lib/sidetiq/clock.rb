@@ -89,7 +89,7 @@ module Sidetiq
     def start!
       return if ticking?
 
-      Sidekiq.logger.info "Sidetiq::Clock start"
+      Sidetiq.logger.info "Sidetiq::Clock start"
 
       @thread = Thread.start { clock { tick } }
       @thread.abort_on_exception = true
@@ -108,7 +108,7 @@ module Sidetiq
     def stop!
       if ticking?
         @thread.kill
-        Sidekiq.logger.info "Sidetiq::Clock stop"
+        Sidetiq.logger.info "Sidetiq::Clock stop"
       end
     end
 
@@ -138,7 +138,7 @@ module Sidetiq
         next_run = (redis.get("#{key}:next") || -1).to_f
 
         if next_run < time_f
-          Sidekiq.logger.info "Sidetiq::Clock enqueue #{worker.name} (at: #{time_f}) (last: #{next_run})"
+          Sidetiq.logger.info "Sidetiq::Clock enqueue #{worker.name} (at: #{time_f}) (last: #{next_run})"
 
           redis.mset("#{key}:last", next_run, "#{key}:next", time_f)
 
@@ -153,13 +153,13 @@ module Sidetiq
     def synchronize_clockworks(lock)
       Sidekiq.redis do |redis|
         if redis.setnx(lock, 1)
-          Sidekiq.logger.debug "Sidetiq::Clock lock #{lock}"
+          Sidetiq.logger.debug "Sidetiq::Clock lock #{lock}"
 
           redis.pexpire(lock, Sidetiq.config.lock_expire)
           yield redis
           redis.del(lock)
 
-          Sidekiq.logger.debug "Sidetiq::Clock unlock #{lock}"
+          Sidetiq.logger.debug "Sidetiq::Clock unlock #{lock}"
         end
       end
     end

@@ -14,7 +14,7 @@ require 'sidetiq'
 require 'sidetiq/web'
 
 # Keep the test output clean.
-Sidekiq.logger = Logger.new(nil)
+Sidetiq.logger = Logger.new(nil)
 
 Dir[File.join(File.dirname(__FILE__), 'fixtures/**/*.rb')].each do |fixture|
   require fixture

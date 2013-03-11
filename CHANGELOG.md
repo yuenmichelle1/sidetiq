@@ -5,6 +5,7 @@ HEAD
 - Add `Sidetiq.workers`.
 - Add `Sidetiq.scheduled`.
 - Add `Sidetiq.retries`.
+- Add `Sidetiq.logger`. This defaults to the Sidekiq logger.
 - Clean up tests.
 
 0.2.0

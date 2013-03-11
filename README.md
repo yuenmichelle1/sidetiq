@@ -14,6 +14,7 @@ Table Of Contents
    * [Installation](#section_Installation)
    * [Introduction](#section_Introduction)
    * [Configuration](#section_Configuration)
+      * [Logging](#section_Configuration_Logging)
    * [API](#section_API)
    * [Polling](#section_Polling)
    * [Known Issues](#section_Known_Issues)
@@ -167,6 +168,16 @@ Sidetiq.configure do |config|
   config.utc = false
 end
 ```
+<a name='section_Configuration_Logging'></a>
+### Logging
+
+By default Sidetiq uses Sidekiq's logger. However, this is configuration:
+
+```ruby
+Sidetiq.logger = Logger.new(STDOUT)
+```
+
+The logger should implement Ruby's [Logger API](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html).
 
 <a name='section_API'></a>
 API

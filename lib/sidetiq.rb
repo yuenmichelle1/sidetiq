@@ -21,6 +21,16 @@ require 'sidetiq/version'
 # The Sidetiq namespace.
 module Sidetiq
   class << self
+    # Public: Setter for the Sidetiq logger.
+    attr_writer :logger
+
+    # Public: Reader for the Sidetiq logger.
+    #
+    # Defaults to `Sidekiq.logger`.
+    def logger
+      @logger ||= Sidekiq.logger
+    end
+
     # Public: Returns an Array of workers including Sidetiq::Schedulable.
     def workers
       schedules.keys
