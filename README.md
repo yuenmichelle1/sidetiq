@@ -6,7 +6,8 @@ Sidetiq
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 
-## TABLE OF CONTENTS
+Table Of Contents
+-----------------
 
    * [Overview](#section_Overview)
    * [Dependencies](#section_Dependencies)
@@ -21,7 +22,8 @@ Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
    * [Author](#section_Author)
 
 <a name='section_Overview></a>
-## OVERVIEW
+Overview
+--------
 
 Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
@@ -36,13 +38,15 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
   Sidetiq clock rates above 100hz).
 
 <a name='section_Dependencies></a>
-## DEPENDENCIES
+Dependencies
+------------
 
 - [Sidekiq](http://mperham.github.com/sidekiq/)
 - [ice_cube](http://seejohnrun.github.com/ice_cube/)
 
 <a name='section_Installation></a>
-## INSTALLATION
+Installation
+------------
 
 The best way to install Sidetiq is with RubyGems:
 
@@ -54,7 +58,8 @@ to pick up all the gems ([more info](http://gembundler.com/bundle_install.html))
     $ bundle install
 
 <a name='section_Introduction></a>
-## INTRODUCTION
+Introduction
+------------
 
 Defining recurring jobs is simple:
 
@@ -110,7 +115,8 @@ Additionally, Sidetiq includes a middleware that will check if the clock
 thread is still alive and restart it if necessary.
 
 <a name='section_Configuration></a>
-## CONFIGURATION
+Configuration
+-------------
 
 ```ruby
 Sidetiq.configure do |config|
@@ -130,7 +136,8 @@ end
 ```
 
 <a name='section_API></a>
-## API
+API
+---
 
 Sidetiq implements a simple API to support reflection of recurring jobs at
 runtime:
@@ -180,7 +187,8 @@ end
 ```
 
 <a name='section_Polling></a>
-## POLLING
+Polling
+-------
 
 By default Sidekiq uses a 15 second polling interval to check if scheduled
 jobs are due. If a recurring job has to run more often than that you should
@@ -190,8 +198,9 @@ lower this value.
 Sidekiq.options[:poll_interval] = 1
 ```
 
-<a name='section_WebExtension></a>
-## WEB EXTENSION
+<a name='section_Web_Extension></a>
+Web Extension
+-------------
 
 Sidetiq includes an extension for Sidekiq's web interface. It will not be
 loaded by default, so it will have to be required manually:
@@ -205,7 +214,8 @@ require 'sidetiq/web'
 ![Screenshot](http://f.cl.ly/items/1P2u1v091F3V1n381g2I/Screen%20Shot%202013-02-01%20at%2012.16.17.png)
 
 <a name='section_Contribute></a>
-## CONTRIBUTE
+Contribute
+----------
 
 If you'd like to contribute to Sidetiq, start by forking my repo on GitHub:
 
@@ -225,12 +235,14 @@ your changes merged back into core is as follows:
 1. Send a pull request to the tobiassvn/sidetiq project.
 
 <a name='section_License></a>
-## LICENSE
+License
+-------
 
 Sidetiq is released under the MIT License. See LICENSE for further details.
 
 <a name='section_Author></a>
-## AUTHOR
+Author
+------
 
 Tobias Svensson, [@tobiassvn](https://twitter.com/tobiassvn), [http://github.com/tobiassvn](http://github.com/tobiassvn)
 
