@@ -21,7 +21,7 @@ Table Of Contents
    * [License](#section_License)
    * [Author](#section_Author)
 
-<a name='section_Overview></a>
+<a name='section_Overview'></a>
 Overview
 --------
 
@@ -37,14 +37,14 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
   each other (tested with sub-second polling of scheduled jobs by Sidekiq and
   Sidetiq clock rates above 100hz).
 
-<a name='section_Dependencies></a>
+<a name='section_Dependencies'></a>
 Dependencies
 ------------
 
 - [Sidekiq](http://mperham.github.com/sidekiq/)
 - [ice_cube](http://seejohnrun.github.com/ice_cube/)
 
-<a name='section_Installation></a>
+<a name='section_Installation'></a>
 Installation
 ------------
 
@@ -57,7 +57,7 @@ to pick up all the gems ([more info](http://gembundler.com/bundle_install.html))
 
     $ bundle install
 
-<a name='section_Introduction></a>
+<a name='section_Introduction'></a>
 Introduction
 ------------
 
@@ -114,7 +114,7 @@ end
 Additionally, Sidetiq includes a middleware that will check if the clock
 thread is still alive and restart it if necessary.
 
-<a name='section_Configuration></a>
+<a name='section_Configuration'></a>
 Configuration
 -------------
 
@@ -135,7 +135,7 @@ Sidetiq.configure do |config|
 end
 ```
 
-<a name='section_API></a>
+<a name='section_API'></a>
 API
 ---
 
@@ -186,7 +186,7 @@ Sidetiq.retries(MyWorker) do |job|
 end
 ```
 
-<a name='section_Polling></a>
+<a name='section_Polling'></a>
 Polling
 -------
 
@@ -198,7 +198,7 @@ lower this value.
 Sidekiq.options[:poll_interval] = 1
 ```
 
-<a name='section_Web_Extension></a>
+<a name='section_Web_Extension'></a>
 Web Extension
 -------------
 
@@ -213,7 +213,7 @@ require 'sidetiq/web'
 
 ![Screenshot](http://f.cl.ly/items/1P2u1v091F3V1n381g2I/Screen%20Shot%202013-02-01%20at%2012.16.17.png)
 
-<a name='section_Contribute></a>
+<a name='section_Contribute'></a>
 Contribute
 ----------
 
@@ -234,13 +234,13 @@ your changes merged back into core is as follows:
 1. Push the branch up to GitHub
 1. Send a pull request to the tobiassvn/sidetiq project.
 
-<a name='section_License></a>
+<a name='section_License'></a>
 License
 -------
 
 Sidetiq is released under the MIT License. See LICENSE for further details.
 
-<a name='section_Author></a>
+<a name='section_Author'></a>
 Author
 ------
 
