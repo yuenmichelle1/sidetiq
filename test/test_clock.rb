@@ -65,7 +65,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   class LastTickWorker
-    def perform last_tick
+    def perform(last_tick)
     end
   end
 
