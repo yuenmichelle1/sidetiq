@@ -73,6 +73,10 @@ class MyWorker
 
   # Daily at midnight
   tiq { daily }
+
+  def perform
+    # do stuff ...
+  end
 end
 ```
 
@@ -90,6 +94,10 @@ class MyWorker
     # Every second year in February
     yearly(2).month_of_year(:february)
   end
+
+  def perform
+    # do stuff ...
+  end
 end
 ```
 
@@ -102,6 +110,28 @@ class MyWorker
 
   # Every other month on the first monday and last tuesday at 12 o'clock.
   tiq { monthly(2).day_of_week(1 => [1], 2 => [-1]).hour_of_day(12) }
+
+  def perform
+    # do stuff ...
+  end
+end
+```
+
+Additionally, the last and current occurrence time (as a `Float`) can be
+passed to the worker simply by adding arguments to `#perform`. Sidetiq
+will check the method arity before enqueuing the job:
+
+```ruby
+class MyWorker
+  include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  tiq { daily }
+
+  # Receive last and current occurrence times.
+  def perform(last_occurrence, current_occurrence)
+    # do stuff ...
+  end
 end
 ```
 
