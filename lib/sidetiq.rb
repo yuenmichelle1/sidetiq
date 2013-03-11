@@ -20,6 +20,11 @@ require 'sidetiq/version'
 
 # The Sidetiq namespace.
 module Sidetiq
+  # Public: Returns an Array of workers including Sidetiq::Schedulable.
+  def self.workers
+    schedules.keys
+  end
+
   # Public: Returns a Hash of Sidetiq::Schedule instances.
   def self.schedules
     Clock.synchronize do
