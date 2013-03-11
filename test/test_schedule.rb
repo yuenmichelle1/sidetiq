@@ -1,10 +1,6 @@
 require_relative 'helper'
 
 class TestSchedule < Sidetiq::TestCase
-  def test_super
-    assert_equal IceCube::Schedule, Sidetiq::Schedule.superclass
-  end
-
   def test_method_missing
     sched = Sidetiq::Schedule.new
     sched.daily

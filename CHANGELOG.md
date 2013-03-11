@@ -7,6 +7,7 @@ HEAD
 - Add `Sidetiq.retries`.
 - Add `Sidetiq.logger`. This defaults to the Sidekiq logger.
 - Clean up tests.
+- Sidetiq::Schedule no longer inherits from IceCube::Schedule.
 
 0.2.0
 -----

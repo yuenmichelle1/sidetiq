@@ -11,10 +11,6 @@ module Sidetiq
     include Singleton
     include MonitorMixin
 
-    # Public: Start time offset from epoch used for calculating run
-    # times in the Sidetiq schedules.
-    START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
-
     # Internal: Returns a hash of Sidetiq::Schedule instances.
     attr_reader :schedules
 
@@ -41,7 +37,7 @@ module Sidetiq
     #
     # Returns a Sidetiq::Schedule instances.
     def schedule_for(worker)
-      schedules[worker] ||= Sidetiq::Schedule.new(START_TIME)
+      schedules[worker] ||= Sidetiq::Schedule.new
     end
 
     # Public: Issue a single clock tick.

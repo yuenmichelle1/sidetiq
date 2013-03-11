@@ -41,7 +41,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_by_schedule
-    schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
+    schedule = Sidetiq::Schedule.new
     schedule.daily
 
     clock.stubs(:schedules).returns(SimpleWorker => schedule)
@@ -60,7 +60,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_with_default_last_tick_arg_on_first_run
-    schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
+    schedule = Sidetiq::Schedule.new
     schedule.hourly
 
     time = Time.local(2011, 1, 1, 1, 30)
@@ -79,7 +79,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_with_last_run_timestamp_and_next_run_timestamp
-    schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
+    schedule = Sidetiq::Schedule.new
     schedule.hourly
 
     time = Time.local(2011, 1, 1, 1, 30)
@@ -98,7 +98,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_correctly_for_splat_args_perform_methods
-    schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
+    schedule = Sidetiq::Schedule.new
     schedule.hourly
 
     time = Time.local(2011, 1, 1, 1, 30)

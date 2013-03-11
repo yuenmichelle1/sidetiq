@@ -12,10 +12,12 @@ module Sidetiq
   #     end
   module Schedulable
     module ClassMethods
+      # Public: Returns a Float timestamp of the last scheduled run.
       def last_scheduled_occurrence
         get_timestamp "last"
       end
 
+      # Public: Returns a Float timestamp of the next scheduled run.
       def next_scheduled_occurrence
         get_timestamp "next"
       end
@@ -41,3 +43,4 @@ module Sidetiq
     end
   end
 end
+
