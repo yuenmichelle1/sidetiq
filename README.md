@@ -16,7 +16,8 @@ Table Of Contents
    * [Configuration](#section_Configuration)
    * [API](#section_API)
    * [Polling](#section_Polling)
-   * [Web Extension](#section_WebExtension)
+   * [Known Issues](#section_Known_Issues)
+   * [Web Extension](#section_Web_Extension)
    * [Contribute](#section_Contribute)
    * [License](#section_License)
    * [Author](#section_Author)
@@ -196,6 +197,37 @@ lower this value.
 
 ```ruby
 Sidekiq.options[:poll_interval] = 1
+```
+
+<a name='section_Known_Issues'></a>
+Known Issues
+------------
+
+Unfortunately, using ice_cube's interval methods is terribly slow on
+start-up (it tends to eat up 100% CPU for quite a while). This is due to it
+calculating every possible occurrence since the schedule's start time. The way
+around is to avoid using them.
+
+For example, instead of defining a job that should run every 15 minutes like this:
+
+```ruby
+class MyWorker
+  include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  tiq { minutely(15) }
+end
+```
+
+It is better to use the more explicit way:
+
+```ruby
+class MyWorker
+  include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  tiq { hourly.minute_of_hour(0, 15, 30, 45) }
+end
 ```
 
 <a name='section_Web_Extension'></a>
