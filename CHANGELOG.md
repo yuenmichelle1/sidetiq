@@ -6,6 +6,7 @@ HEAD
 - Add `Sidetiq.scheduled`.
 - Add `Sidetiq.retries`.
 - Add `Sidetiq.logger`. This defaults to the Sidekiq logger.
+- Add support for job backfills.
 - Clean up tests.
 - Sidetiq::Schedule no longer inherits from IceCube::Schedule.
 

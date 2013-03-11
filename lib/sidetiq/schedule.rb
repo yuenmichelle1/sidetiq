@@ -1,6 +1,12 @@
 module Sidetiq
   # Public: Recurrence schedule.
   class Schedule
+    # :nodoc:
+    attr_reader :last_occurrence
+
+    # Public: Writer for backfilling option.
+    attr_writer :backfill
+
     # Public: Start time offset from epoch used for calculating run
     # times in the Sidetiq schedules.
     START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
@@ -53,6 +59,16 @@ module Sidetiq
     # Returns a String representing the schedule.
     def to_s
       @schedule.to_s
+    end
+
+    # Public: Inquirer for backfilling option.
+    def backfill?
+      !!@backfill
+    end
+
+    # Internal: Set schedule options.
+    def set_options(hash)
+      self.backfill = hash[:backfill] if !hash[:backfill].nil?
     end
   end
 end

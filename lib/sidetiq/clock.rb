@@ -51,10 +51,16 @@ module Sidetiq
     def tick
       tick = gettime
       synchronize do
-        schedules.each do |worker, schedule|
-          if schedule.schedule_next?(tick)
-            enqueue(worker, schedule.next_occurrence(tick))
-          end
+        schedules.each do |worker, sched|
+          synchronize_clockworks(worker) do |redis|
+            if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
+              last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
+              sched.occurrences_between(last + 1, tick).each do |past_t|
+                enqueue(worker, past_t, redis)
+              end
+            end
+            enqueue(worker, sched.next_occurrence(tick), redis)
+          end if sched.schedule_next?(tick)
         end
       end
     end
@@ -126,27 +132,26 @@ module Sidetiq
 
     private
 
-    def enqueue(worker, time)
-      key = "sidetiq:#{worker.name}"
-      time_f = time.to_f
+    def enqueue(worker, time, redis)
+      key      = "sidetiq:#{worker.name}"
+      time_f   = time.to_f
+      next_run = (redis.get("#{key}:next") || -1).to_f
 
-      synchronize_clockworks("#{key}:lock") do |redis|
-        next_run = (redis.get("#{key}:next") || -1).to_f
+      if next_run < time_f
+        Sidetiq.logger.info "Sidetiq::Clock enqueue #{worker.name} (at: #{time_f}) (last: #{next_run})"
 
-        if next_run < time_f
-          Sidetiq.logger.info "Sidetiq::Clock enqueue #{worker.name} (at: #{time_f}) (last: #{next_run})"
+        redis.mset("#{key}:last", next_run, "#{key}:next", time_f)
 
-          redis.mset("#{key}:last", next_run, "#{key}:next", time_f)
+        arity = [worker.instance_method(:perform).arity - 1, -1].max
+        args = [next_run, time_f][0..arity]
 
-          arity = [worker.instance_method(:perform).arity - 1, -1].max
-          args = [next_run, time_f][0..arity]
-
-          worker.perform_at(time, *args)
-        end
+        worker.perform_at(time, *args)
       end
     end
 
-    def synchronize_clockworks(lock)
+    def synchronize_clockworks(klass)
+      lock = "sidetiq:#{klass.name}:lock"
+
       Sidekiq.redis do |redis|
         if redis.setnx(lock, 1)
           Sidetiq.logger.debug "Sidetiq::Clock lock #{lock}"

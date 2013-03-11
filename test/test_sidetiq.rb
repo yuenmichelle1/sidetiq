@@ -2,13 +2,23 @@ require_relative 'helper'
 
 class TestSidetiq < Sidetiq::TestCase
   def test_schedules
-    assert_equal Sidetiq.schedules, Sidetiq::Clock.schedules
-    assert_equal [ScheduledWorker], Sidetiq.schedules.keys
-    assert_kind_of Sidetiq::Schedule, Sidetiq.schedules[ScheduledWorker]
+    schedules = Sidetiq.schedules
+
+    assert_equal 2, schedules.length
+
+    assert_includes schedules.keys, ScheduledWorker
+    assert_includes schedules.keys, BackfillWorker
+
+    assert_kind_of Sidetiq::Schedule, schedules[ScheduledWorker]
+    assert_kind_of Sidetiq::Schedule, schedules[BackfillWorker]
   end
 
   def test_workers
-    assert_equal [ScheduledWorker], Sidetiq.workers
+    workers = Sidetiq.workers
+
+    assert_includes workers, ScheduledWorker
+    assert_includes workers, BackfillWorker
+    assert_equal 2, workers.length
   end
 
   def test_scheduled

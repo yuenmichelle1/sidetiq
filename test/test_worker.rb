@@ -22,4 +22,8 @@ class TestWorker < Sidetiq::TestCase
     assert FakeWorker.last_scheduled_occurrence == last_run
     assert FakeWorker.next_scheduled_occurrence == next_run
   end
+
+  def test_options
+    assert Sidetiq.schedules[BackfillWorker].backfill?
+  end
 end

@@ -40,6 +40,21 @@ class TestClock < Sidetiq::TestCase
     Sidetiq.config.utc = false
   end
 
+  def test_backfilling
+    BackfillWorker.jobs.clear
+    start = Sidetiq::Schedule::START_TIME
+
+    BackfillWorker.stubs(:last_scheduled_occurrence).returns(start.to_f)
+    clock.stubs(:gettime).returns(start)
+    clock.tick
+
+    BackfillWorker.jobs.clear
+
+    clock.stubs(:gettime).returns(start + 86400 * 10 + 1)
+    clock.tick
+    assert_equal 10, BackfillWorker.jobs.length
+  end
+
   def test_enqueues_jobs_by_schedule
     schedule = Sidetiq::Schedule.new
     schedule.daily
@@ -72,7 +87,8 @@ class TestClock < Sidetiq::TestCase
     expected_second_tick = expected_first_tick + 3600
 
     LastTickWorker.expects(:perform_at).with(expected_first_tick, -1).once
-    LastTickWorker.expects(:perform_at).with(expected_second_tick, expected_first_tick.to_f).once
+    LastTickWorker.expects(:perform_at).with(expected_second_tick,
+      expected_first_tick.to_f).once
 
     clock.tick
     clock.tick
@@ -90,10 +106,15 @@ class TestClock < Sidetiq::TestCase
     expected_first_tick = time + 1800
     expected_second_tick = expected_first_tick + 3600
 
-    LastAndScheduledTicksWorker.expects(:perform_at).with(expected_first_tick, -1, expected_first_tick.to_f).once
+    LastAndScheduledTicksWorker.expects(:perform_at)
+      .with(expected_first_tick, -1, expected_first_tick.to_f).once
+
     clock.tick
 
-    LastAndScheduledTicksWorker.expects(:perform_at).with(expected_second_tick, expected_first_tick.to_f, expected_second_tick.to_f).once
+    LastAndScheduledTicksWorker.expects(:perform_at)
+      .with(expected_second_tick, expected_first_tick.to_f,
+      expected_second_tick.to_f).once
+
     clock.tick
   end
 
@@ -108,7 +129,8 @@ class TestClock < Sidetiq::TestCase
 
     expected_first_tick = time + 1800
 
-    SplatArgsWorker.expects(:perform_at).with(expected_first_tick, -1, expected_first_tick.to_f).once
+    SplatArgsWorker.expects(:perform_at)
+      .with(expected_first_tick, -1, expected_first_tick.to_f).once
     clock.tick
   end
 end

@@ -4,12 +4,12 @@ module Sidetiq
   # Examples
   #
   #   class MyWorker
-  #       include Sidekiq::Worker
-  #       include Sidetiq::Schedulable
+  #     include Sidekiq::Worker
+  #     include Sidetiq::Schedulable
   #
-  #       # Daily at midnight
-  #       tiq { daily }
-  #     end
+  #     # Daily at midnight
+  #     tiq { daily }
+  #   end
   module Schedulable
     module ClassMethods
       # Public: Returns a Float timestamp of the last scheduled run.
@@ -22,14 +22,16 @@ module Sidetiq
         get_timestamp "next"
       end
 
-      def tiq(&block) # :nodoc:
+      def tiq(options = {}, &block) # :nodoc:
         clock = Sidetiq::Clock.instance
         clock.synchronize do
-          clock.schedule_for(self).instance_eval(&block)
+          schedule = clock.schedule_for(self)
+          schedule.instance_eval(&block)
+          schedule.set_options(options)
         end
       end
 
-    private
+      private
 
       def get_timestamp(key)
         Sidekiq.redis do |redis|

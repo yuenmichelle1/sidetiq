@@ -13,6 +13,7 @@ Table Of Contents
    * [Dependencies](#section_Dependencies)
    * [Installation](#section_Installation)
    * [Introduction](#section_Introduction)
+   * [Backfills](#section_Backfills)
    * [Configuration](#section_Configuration)
       * [Logging](#section_Configuration_Logging)
    * [API](#section_API)
@@ -147,6 +148,32 @@ end
 
 Additionally, Sidetiq includes a middleware that will check if the clock
 thread is still alive and restart it if necessary.
+
+<a name='section_Backfills''></a>
+Backfills
+---------
+
+In certain cases it is desirable that missed jobs will be enqueued
+retroactively, for example when a critical, hourly job isn't run due to
+server downtime. To solve this, `#tiq` takes a *backfill* option. If
+missing job occurrences have been detected, Sidetiq will then enqueue
+the jobs automatically. It will also ensure that the timestamps passed to
+`#perform` are as expected:
+
+```ruby
+class MyWorker
+  include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  tiq backfill: true do
+    hourly
+  end
+
+  def perform(last_occurrence, current_occurrence)
+    # do stuff ...
+  end
+end
+```
 
 <a name='section_Configuration'></a>
 Configuration
