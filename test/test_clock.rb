@@ -78,11 +78,6 @@ class TestClock < Sidetiq::TestCase
     clock.tick
   end
 
-  class LastAndScheduledTicksWorker
-    def perform last_tick, scheduled_tick
-    end
-  end
-
   def test_enqueues_jobs_with_last_run_timestamp_and_next_run_timestamp
     schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
     schedule.hourly
