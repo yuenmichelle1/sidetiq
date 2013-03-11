@@ -3,19 +3,6 @@ require_relative 'helper'
 class TestWeb < Sidetiq::TestCase
   include Rack::Test::Methods
 
-  class Worker
-    include Sidekiq::Worker
-    include Sidetiq::Schedulable
-
-    tiq do
-      daily(1)
-      yearly(2)
-      monthly(3)
-
-      add_exception_rule yearly.month_of_year(:february)
-    end
-  end
-
   def app
     Sidekiq::Web
   end
@@ -26,7 +13,7 @@ class TestWeb < Sidetiq::TestCase
 
   def setup
     super
-    Worker.jobs.clear
+    ScheduledWorker.jobs.clear
   end
 
   def test_home_tab
@@ -47,9 +34,9 @@ class TestWeb < Sidetiq::TestCase
   end
 
   def test_details_page
-    get "/sidetiq/#{Worker.name}"
+    get "/sidetiq/ScheduledWorker"
     assert_equal 200, last_response.status
-    schedule = clock.schedules[Worker]
+    schedule = clock.schedules[ScheduledWorker]
 
     schedule.recurrence_rules.each do |rule|
       assert_match /#{rule.to_s}/, last_response.body
@@ -65,10 +52,10 @@ class TestWeb < Sidetiq::TestCase
   end
 
   def test_trigger
-    post "/sidetiq/#{Worker.name}/trigger"
+    post "/sidetiq/ScheduledWorker/trigger"
     assert_equal 302, last_response.status
     assert_equal "http://#{host}/sidetiq", last_response.location
-    assert_equal 1, Worker.jobs.size
+    assert_equal 1, ScheduledWorker.jobs.size
   end
 end
 

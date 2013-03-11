@@ -1,11 +1,6 @@
 require_relative 'helper'
 
 class TestClock < Sidetiq::TestCase
-  class FakeWorker
-    def perform
-    end
-  end
-
   def test_delegates_to_instance
     Sidetiq::Clock.instance.expects(:foo).once
     Sidetiq::Clock.foo
@@ -49,9 +44,9 @@ class TestClock < Sidetiq::TestCase
     schedule = Sidetiq::Schedule.new(Sidetiq::Clock::START_TIME)
     schedule.daily
 
-    clock.stubs(:schedules).returns(FakeWorker => schedule)
+    clock.stubs(:schedules).returns(SimpleWorker => schedule)
 
-    FakeWorker.expects(:perform_at).times(10)
+    SimpleWorker.expects(:perform_at).times(10)
 
     10.times do |i|
       clock.stubs(:gettime).returns(Time.local(2011, 1, i + 1, 1))
@@ -62,11 +57,6 @@ class TestClock < Sidetiq::TestCase
     clock.tick
     clock.tick
     clock.tick
-  end
-
-  class LastTickWorker
-    def perform(last_tick)
-    end
   end
 
   def test_enqueues_jobs_with_default_last_tick_arg_on_first_run
@@ -110,11 +100,6 @@ class TestClock < Sidetiq::TestCase
 
     LastAndScheduledTicksWorker.expects(:perform_at).with(expected_second_tick, expected_first_tick.to_f, expected_second_tick.to_f).once
     clock.tick
-  end
-
-  class SplatArgsWorker
-    def perform(arg1, *args)
-    end
   end
 
   def test_enqueues_jobs_correctly_for_splat_args_perform_methods

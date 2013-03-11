@@ -13,8 +13,12 @@ require 'sidekiq/testing'
 require 'sidetiq'
 require 'sidetiq/web'
 
-# Keep the test output clean
+# Keep the test output clean.
 Sidekiq.logger = Logger.new(nil)
+
+Dir[File.join(File.dirname(__FILE__), 'fixtures/**/*.rb')].each do |fixture|
+  require fixture
+end
 
 class Sidetiq::TestCase < MiniTest::Unit::TestCase
   def setup
