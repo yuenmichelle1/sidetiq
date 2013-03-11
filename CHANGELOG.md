@@ -1,3 +1,12 @@
+HEAD
+----
+
+- Add `Sidetiq.schedules`.
+- Add `Sidetiq.workers`.
+- Add `Sidetiq.scheduled`.
+- Add `Sidetiq.retries`.
+- Clean up tests.
+
 0.2.0
 -----
 
