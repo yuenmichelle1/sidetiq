@@ -38,6 +38,8 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
   each other (tested with sub-second polling of scheduled jobs by Sidekiq and
   Sidetiq clock rates above 100hz).
 
+Detailed API documentation is available on [rubydoc.info](http://rdoc.info/github/tobiassvn/sidetiq/).
+
 <a name='section_Dependencies'></a>
 Dependencies
 ------------
