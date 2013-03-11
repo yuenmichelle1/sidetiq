@@ -5,7 +5,6 @@ HEAD
 - Add `Sidetiq.workers`.
 - Add `Sidetiq.scheduled`.
 - Add `Sidetiq.retries`.
-- Add flip-table API (delegates to Sidekiq's flip-table API).
 - Clean up tests.
 
 0.2.0

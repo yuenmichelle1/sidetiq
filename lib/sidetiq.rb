@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # stdlib
 require 'monitor'
 require 'ostruct'
@@ -23,13 +21,6 @@ require 'sidetiq/version'
 # The Sidetiq namespace.
 module Sidetiq
   class << self
-    # Public: Flip-table API.
-    #
-    # Delegates to Sidekiq's flip-table API.
-    def ❨╯°□°❩╯︵ ┻━┻
-      Sidekiq.❨╯°□°❩╯︵ ┻━┻
-    end
-
     # Public: Returns an Array of workers including Sidetiq::Schedulable.
     def workers
       schedules.keys
