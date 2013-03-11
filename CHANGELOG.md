@@ -1,5 +1,5 @@
-HEAD
-----
+0.3.0
+-----
 
 - Add `Sidetiq.schedules`.
 - Add `Sidetiq.workers`.
