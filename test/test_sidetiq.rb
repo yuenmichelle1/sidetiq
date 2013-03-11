@@ -1,10 +1,6 @@
 require_relative 'helper'
 
 class TestSidetiq < Sidetiq::TestCase
-  def teardown
-    Sidekiq::ScheduledSet.new.map(&:delete)
-  end
-
   def test_schedules
     assert_equal Sidetiq.schedules, Sidetiq::Clock.schedules
     assert_equal [ScheduledWorker], Sidetiq.schedules.keys
@@ -24,6 +20,10 @@ class TestSidetiq < Sidetiq::TestCase
     assert_kind_of Array, scheduled
     assert_kind_of Sidekiq::SortedEntry, scheduled.first
     assert_equal 1, scheduled.length
+  end
+
+  def test_scheduled_on_empty_set
+    assert_equal 0, Sidetiq.scheduled.length
   end
 
   def test_scheduled_given_arguments
@@ -60,6 +60,55 @@ class TestSidetiq < Sidetiq::TestCase
   def test_scheduled_with_invalid_class
     assert_raises(NameError) do
       Sidetiq.scheduled("Foobar")
+    end
+  end
+
+  def test_retries
+    add_retry('SimpleWorker', 'foo')
+    add_retry('ScheduledWorker', 'bar')
+
+    retries = Sidetiq.retries
+
+    assert_kind_of Array, retries
+    assert_kind_of Sidekiq::SortedEntry, retries[0]
+    assert_kind_of Sidekiq::SortedEntry, retries[1]
+    assert_equal 2, retries.length
+  end
+
+  def test_retries_on_empty_set
+    assert_equal 0, Sidetiq.retries.length
+  end
+
+  def test_retries_given_arguments
+    add_retry('SimpleWorker', 'foo')
+
+    assert_equal 1, Sidetiq.retries(SimpleWorker).length
+    assert_equal 0, Sidetiq.retries(ScheduledWorker).length
+
+    assert_equal 1, Sidetiq.retries("SimpleWorker").length
+    assert_equal 0, Sidetiq.retries("ScheduledWorker").length
+  end
+
+  def test_retries_yields_each_job
+    add_retry('SimpleWorker', 'foo')
+    add_retry('ScheduledWorker', 'foo')
+
+    jobs = []
+    Sidetiq.retries { |job| jobs << job }
+    assert_equal 2, jobs.length
+
+    jobs = []
+    Sidetiq.retries(SimpleWorker) { |job| jobs << job }
+    assert_equal 1, jobs.length
+
+    jobs = []
+    Sidetiq.retries("ScheduledWorker") { |job| jobs << job }
+    assert_equal 1, jobs.length
+  end
+
+  def test_retries_with_invalid_class
+    assert_raises(NameError) do
+      Sidetiq.retries("Foobar")
     end
   end
 end

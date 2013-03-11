@@ -28,5 +28,16 @@ class Sidetiq::TestCase < MiniTest::Unit::TestCase
   def clock
     @clock ||= Sidetiq::Clock.instance
   end
+
+  # Blatantly stolen from Sidekiq's test suite.
+  def add_retry(worker = 'SimpleWorker', jid = 'bob', at = Time.now.to_f)
+    payload = Sidekiq.dump_json('class' => worker,
+      'args' => [], 'queue' => 'default', 'jid' => jid,
+      'retry_count' => 2, 'failed_at' => Time.now.utc)
+
+    Sidekiq.redis do |conn|
+      conn.zadd('retry', at.to_s, payload)
+    end
+  end
 end
 
