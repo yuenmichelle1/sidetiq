@@ -110,7 +110,48 @@ Sidetiq.configure do |config|
 end
 ```
 
-## NOTES
+## API
+
+Sidetiq implements a simple API to support reflection of recurring jobs at
+runtime:
+
+```ruby
+# Sidetiq.schedules returns a Hash with the Sidekiq::Worker class as the
+# key and the Sidetiq::Schedule object as the value:
+
+Sidetiq.schedules
+# => { MyWorker => #<Sidetiq::Schedule> }
+
+# Sidetiq.workers returns an Array of all workers currently tracked by
+# Sidetiq (workers which include Sidetiq::Schedulable and a *tiq* call):
+
+Sidetiq.workers
+# => [MyWorker, AnotherWorker]
+
+# Sidetiq.scheduled returns an Array of currently scheduled Sidetiq jobs
+# as Sidekiq::SortedEntry (Sidekiq::Job) objects. Optionally, it is
+# possible to pass a block to which each job will be yielded:
+
+Sidetiq.scheduled do |job|
+  # do stuff ...
+end
+
+# This list can further be filtered by passing the worker class to #scheduled,
+# either as a String or the constant itself:
+
+Sidetiq.scheduled(MyWorker) do |job|
+  # do stuff ...
+end
+
+# The same can be done for recurring jobs currently scheduled for retries
+# (`.retries` wraps Sidekiq::RetrySet instead of Sidekiq::ScheduledSet):
+
+Sidetiq.retries(MyWorker) do |job|
+  # do stuff ...
+end
+```
+
+## JOB POLLING
 
 By default Sidekiq uses a 15 second polling interval to check if scheduled
 jobs are due. If a recurring job has to run more often than that you should
@@ -155,3 +196,7 @@ your changes merged back into core is as follows:
 ## LICENSE
 
 Sidetiq is released under the MIT License. See LICENSE for further details.
+
+## AUTHOR
+
+Tobias Svensson, [@tobiassvn](https://twitter.com/tobiassvn), [http://github.com/tobiassvn](http://github.com/tobiassvn)
