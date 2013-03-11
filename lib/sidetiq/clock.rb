@@ -53,11 +53,11 @@ module Sidetiq
     #
     # Returns a hash of Sidetiq::Schedule instances.
     def tick
-      @tick = gettime
+      tick = gettime
       synchronize do
         schedules.each do |worker, schedule|
-          if schedule.schedule_next?(@tick)
-            enqueue(worker, schedule.next_occurrence(@tick))
+          if schedule.schedule_next?(tick)
+            enqueue(worker, schedule.next_occurrence(tick))
           end
         end
       end
