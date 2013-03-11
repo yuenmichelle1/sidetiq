@@ -20,5 +20,11 @@ require 'sidetiq/version'
 
 # The Sidetiq namespace.
 module Sidetiq
+  # Public: Returns a Hash of Sidetiq::Schedule instances.
+  def self.schedules
+    Clock.synchronize do
+      Clock.schedules.dup
+    end
+  end
 end
 

@@ -15,10 +15,10 @@ module Sidetiq
     # times in the Sidetiq schedules.
     START_TIME = Sidetiq.config.utc ? Time.utc(2010, 1, 1) : Time.local(2010, 1, 1)
 
-    # Public: Returns a hash of Sidetiq::Schedule instances.
+    # Internal: Returns a hash of Sidetiq::Schedule instances.
     attr_reader :schedules
 
-    # Public: Returns the clock thread.
+    # Internal: Returns the clock thread.
     attr_reader :thread
 
     def self.method_missing(meth, *args, &block) # :nodoc:
@@ -90,6 +90,7 @@ module Sidetiq
       return if ticking?
 
       Sidekiq.logger.info "Sidetiq::Clock start"
+
       @thread = Thread.start { clock { tick } }
       @thread.abort_on_exception = true
       @thread.priority = Sidetiq.config.priority
@@ -181,3 +182,4 @@ module Sidetiq
     end
   end
 end
+
