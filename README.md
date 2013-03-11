@@ -152,7 +152,7 @@ Sidetiq.schedules
 ```
 
 `Sidetiq.workers` returns an `Array` of all workers currently tracked by
-Sidetiq (workers which include Sidetiq::Schedulable and a `tiq` call):
+Sidetiq (workers which include `Sidetiq::Schedulable` and a `.tiq` call):
 
 ```ruby
 Sidetiq.workers
