@@ -242,6 +242,9 @@ lower this value.
 Sidekiq.options[:poll_interval] = 1
 ```
 
+More information about this can be found in the
+[Sidekiq Wiki](https://github.com/mperham/sidekiq/wiki/Scheduled-Jobs).
+
 <a name='section_Known_Issues'></a>
 Known Issues
 ------------
