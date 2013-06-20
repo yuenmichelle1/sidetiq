@@ -1,3 +1,10 @@
+0.3.1
+-----
+
+- Bump ice_cube dependency to ~> 0.11.0.
+- Bump Sidekiq dependency to ~> 2.12.0.
+- Fix tests.
+
 0.3.0
 -----
 
