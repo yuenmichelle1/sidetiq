@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = "Recurring jobs for Sidekiq"
   gem.summary       = gem.description
   gem.homepage      = "http://github.com/tobiassvn/sidetiq"
-  gem.license       = "MIT"
+  gem.license       = "3-clause BSD"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

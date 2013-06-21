@@ -343,7 +343,7 @@ your changes merged back into core is as follows:
 License
 -------
 
-Sidetiq is released under the MIT License. See LICENSE for further details.
+Sidetiq is released under the 3-clause BSD. See LICENSE for further details.
 
 <a name='section_Author'></a>
 Author
