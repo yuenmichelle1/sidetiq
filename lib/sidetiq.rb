@@ -7,9 +7,6 @@ require 'singleton'
 require 'ice_cube'
 require 'sidekiq'
 
-# c extensions
-require 'sidetiq_ext'
-
 # internal
 require 'sidetiq/config'
 require 'sidetiq/clock'

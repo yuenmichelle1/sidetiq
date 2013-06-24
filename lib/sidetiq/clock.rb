@@ -67,9 +67,6 @@ module Sidetiq
 
     # Public: Returns the current time used by the clock.
     #
-    # Sidetiq::Clock uses `clock_gettime()` on UNIX systems and
-    # `mach_absolute_time()` on Mac OS X.
-    #
     # Examples
     #
     #   gettime
@@ -77,7 +74,7 @@ module Sidetiq
     #
     # Returns a Time instance.
     def gettime
-      Sidetiq.config.utc ? clock_gettime.utc : clock_gettime
+      Sidetiq.config.utc ? Time.now.utc : Time.now
     end
 
     # Public: Starts the clock unless it is already running.

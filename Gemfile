@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 group :development do
   gem 'rake'
-  gem 'rake-compiler'
   gem 'sinatra', require: false
   gem 'slim', require: false
 end
