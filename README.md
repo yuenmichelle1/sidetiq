@@ -32,9 +32,6 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
 - Flexible DSL based on [ice_cube](http://seejohnrun.github.com/ice_cube/)
 
-- High-resolution timer using `clock_gettime(3)` (or `mach_absolute_time()` on
-  Apple Mac OS X), allowing for accurate sub-second clock ticks.
-
 - Sidetiq uses a locking mechanism (based on `setnx` and `pexpire`) internally
   so Sidetiq clocks can run in each Sidekiq process without interfering with
   each other (tested with sub-second polling of scheduled jobs by Sidekiq and
