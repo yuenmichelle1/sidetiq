@@ -153,11 +153,13 @@ module Sidetiq
         if redis.setnx(lock, 1)
           Sidetiq.logger.debug "Sidetiq::Clock lock #{lock}"
 
-          redis.pexpire(lock, Sidetiq.config.lock_expire)
-          yield redis
-          redis.del(lock)
-
-          Sidetiq.logger.debug "Sidetiq::Clock unlock #{lock}"
+          begin
+            redis.pexpire(lock, Sidetiq.config.lock_expire)
+            yield redis
+          ensure
+            redis.del(lock)
+            Sidetiq.logger.debug "Sidetiq::Clock unlock #{lock}"
+          end
         end
       end
     end
