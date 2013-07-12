@@ -22,7 +22,14 @@ module Sidetiq
         get_timestamp "next"
       end
 
-      def tiq(options = {}, &block) # :nodoc:
+      def tiq(*args, &block) # :nodoc:
+        Sidetiq.logger.warn "DEPRECATION WARNING: Sidetiq::Schedulable#tiq" <<
+          " is deprecated and will be removed. Use" <<
+          " Sidetiq::Schedulable#recurrence instead."
+        recurrence(*args, &block)
+      end
+
+      def recurrence(options = {}, &block) # :nodoc:
         clock = Sidetiq::Clock.instance
         clock.synchronize do
           schedule = clock.schedule_for(self)

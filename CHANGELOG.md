@@ -1,3 +1,8 @@
+0.4.0
+-----
+
+- Rename Sidekiq::Schedulable#tiq to #recurrence.
+
 0.3.2
 -----
 

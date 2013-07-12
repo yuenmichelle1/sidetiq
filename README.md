@@ -71,7 +71,7 @@ class MyWorker
   include Sidetiq::Schedulable
 
   # Daily at midnight
-  tiq { daily }
+  recurrence { daily }
 
   def perform
     # do stuff ...
@@ -86,7 +86,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq do
+  recurrence do
     # Every third year in March
     yearly(3).month_of_year(:march)
 
@@ -108,7 +108,7 @@ class MyWorker
   include Sidetiq::Schedulable
 
   # Every other month on the first monday and last tuesday at 12 o'clock.
-  tiq { monthly(2).day_of_week(1 => [1], 2 => [-1]).hour_of_day(12) }
+  recurrence { monthly(2).day_of_week(1 => [1], 2 => [-1]).hour_of_day(12) }
 
   def perform
     # do stuff ...
@@ -125,7 +125,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq { daily }
+  recurrence { daily }
 
   # Receive last and current occurrence times.
   def perform(last_occurrence, current_occurrence)
@@ -162,7 +162,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq backfill: true do
+  recurrence backfill: true do
     hourly
   end
 
@@ -285,7 +285,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq { minutely(15) }
+  recurrence { minutely(15) }
 end
 ```
 
@@ -296,7 +296,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq { hourly.minute_of_hour(0, 15, 30, 45) }
+  recurrence { hourly.minute_of_hour(0, 15, 30, 45) }
 end
 ```
 

@@ -2,7 +2,7 @@ class ScheduledWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq do
+  recurrence do
     daily.hour_of_day(1)
     yearly.month_of_year(2)
     monthly.day_of_month(3)

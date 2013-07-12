@@ -13,7 +13,7 @@ class MyWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq { secondly }
+  recurrence { secondly }
 
   def perform(*args)
     Sidekiq.logger.info "#perform"

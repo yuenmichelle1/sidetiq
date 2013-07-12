@@ -2,7 +2,7 @@ class BackfillWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  tiq backfill: true do
+  recurrence backfill: true do
     daily
   end
 
