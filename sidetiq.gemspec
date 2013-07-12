@@ -17,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
-  gem.extensions    = ['ext/sidetiq_ext/extconf.rb']
+  gem.extensions    = []
 
-  gem.add_dependency 'sidekiq',  '~> 2.12.0'
+  gem.add_dependency 'sidekiq',  '~> 2.13.0'
   gem.add_dependency 'ice_cube', '~> 0.11.0'
 end
