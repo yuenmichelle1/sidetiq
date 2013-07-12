@@ -1,7 +1,9 @@
-0.4.0
+0.3.3
 -----
 
-- Rename Sidekiq::Schedulable#tiq to #recurrence.
+- Deprecate Sidekiq::Schedulable.tiq in favor of .recurrence.
+  Sidekiq::Schedulable.tiq will still work until v0.4.0 but log
+  a deprecation warning.
 
 0.3.2
 -----
