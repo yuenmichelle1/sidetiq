@@ -152,7 +152,7 @@ Backfills
 
 In certain cases it is desirable that missed jobs will be enqueued
 retroactively, for example when a critical, hourly job isn't run due to
-server downtime. To solve this, `#tiq` takes a *backfill* option. If
+server downtime. To solve this, `#recurrence` takes a *backfill* option. If
 missing job occurrences have been detected, Sidetiq will then enqueue
 the jobs automatically. It will also ensure that the timestamps passed to
 `#perform` are as expected:
@@ -219,7 +219,8 @@ Sidetiq.schedules
 ```
 
 `Sidetiq.workers` returns an `Array` of all workers currently tracked by
-Sidetiq (workers which include `Sidetiq::Schedulable` and a `.tiq` call):
+Sidetiq (workers which include `Sidetiq::Schedulable` and a `.recurrence`
+call):
 
 ```ruby
 Sidetiq.workers
