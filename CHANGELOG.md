@@ -1,3 +1,13 @@
+0.3.2
+-----
+
+- Fix tests to work with changes to Sidekiq::Client.
+  #push_old seems to expect 'at' instead of 'enqueued_at' now
+- Switch from MIT to 3-clause BSD license.
+- Remove C extension.
+- Bump Sidekiq dependency to ~> 2.13.0.
+- Ensure redis locks get unlocked in Clock#synchronize_clockworks.
+
 0.3.1
 -----
 
