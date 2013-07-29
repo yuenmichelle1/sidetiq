@@ -1,3 +1,8 @@
+0.3.4
+-----
+
+- More robust #perform arity handling.
+
 0.3.3
 -----
 
