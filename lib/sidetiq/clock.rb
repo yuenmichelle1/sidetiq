@@ -139,10 +139,14 @@ module Sidetiq
 
         redis.mset("#{key}:last", next_run, "#{key}:next", time_f)
 
-        arity = [worker.instance_method(:perform).arity - 1, -1].max
-        args = [next_run, time_f][0..arity]
-
-        worker.perform_at(time, *args)
+        case worker.instance_method(:perform).arity
+        when 0
+          worker.perform_at(time)
+        when 1
+          worker.perform_at(time, next_run)
+        else
+          worker.perform_at(time, next_run, time_f)
+        end
       end
     end
 
