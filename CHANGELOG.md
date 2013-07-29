@@ -1,3 +1,11 @@
+0.3.5
+-----
+
+- Use Clock#mon_synchronize instead of #synchronize.
+
+  ActiveSupport's core extensions override Module#synchronize which seems to
+  break MonitorMixin.
+
 0.3.4
 -----
 
