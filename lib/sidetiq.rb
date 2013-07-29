@@ -35,7 +35,7 @@ module Sidetiq
 
     # Public: Returns a Hash of Sidetiq::Schedule instances.
     def schedules
-      Clock.synchronize do
+      Clock.mon_synchronize do
         Clock.schedules.dup
       end
     end

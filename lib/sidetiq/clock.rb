@@ -50,7 +50,7 @@ module Sidetiq
     # Returns a hash of Sidetiq::Schedule instances.
     def tick
       tick = gettime
-      synchronize do
+      mon_synchronize do
         schedules.each do |worker, sched|
           synchronize_clockworks(worker) do |redis|
             if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
