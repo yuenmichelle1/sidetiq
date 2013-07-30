@@ -1,3 +1,8 @@
+0.3.6
+-----
+
+- Fix Sidetiq::Schedulable documentation.
+
 0.3.5
 -----
 
