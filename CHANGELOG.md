@@ -1,3 +1,12 @@
+0.3.7
+-----
+
+- Better protection against stale locks and race-conditions.
+
+  Locking is now done using WATCH/MULTI/EXEC/UNWATCH and additionally
+  includes a host and process specific identifier to prevent accidental
+  unlocks from other Sidekiq processes.
+
 0.3.6
 -----
 
