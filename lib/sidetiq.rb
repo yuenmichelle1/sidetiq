@@ -2,6 +2,7 @@
 require 'monitor'
 require 'ostruct'
 require 'singleton'
+require 'socket'
 
 # gems
 require 'ice_cube'
@@ -10,6 +11,7 @@ require 'sidekiq'
 # internal
 require 'sidetiq/config'
 require 'sidetiq/clock'
+require 'sidetiq/lock'
 require 'sidetiq/middleware'
 require 'sidetiq/schedule'
 require 'sidetiq/schedulable'

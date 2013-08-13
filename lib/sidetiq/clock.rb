@@ -52,7 +52,7 @@ module Sidetiq
       tick = gettime
       mon_synchronize do
         schedules.each do |worker, sched|
-          synchronize_clockworks(worker) do |redis|
+          Lock.new(worker).synchronize do |redis|
             if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
               last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
               sched.occurrences_between(last + 1, tick).each do |past_t|
@@ -146,24 +146,6 @@ module Sidetiq
           worker.perform_at(time, next_run)
         else
           worker.perform_at(time, next_run, time_f)
-        end
-      end
-    end
-
-    def synchronize_clockworks(klass)
-      lock = "sidetiq:#{klass.name}:lock"
-
-      Sidekiq.redis do |redis|
-        if redis.setnx(lock, 1)
-          Sidetiq.logger.debug "Sidetiq::Clock lock #{lock}"
-
-          begin
-            redis.pexpire(lock, Sidetiq.config.lock_expire)
-            yield redis
-          ensure
-            redis.del(lock)
-            Sidetiq.logger.debug "Sidetiq::Clock unlock #{lock}"
-          end
         end
       end
     end
