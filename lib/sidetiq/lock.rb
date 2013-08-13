@@ -12,11 +12,13 @@ module Sidetiq
     def synchronize
       Sidekiq.redis do |redis|
         if lock(redis)
+          Sidetiq.logger.debug "Sidetiq::Clock lock #{key}"
 
           begin
             yield redis
           ensure
             unlock(redis)
+            Sidetiq.logger.debug "Sidetiq::Clock unlock #{key}"
           end
         end
       end
@@ -35,8 +37,6 @@ module Sidetiq
         end
       end
 
-      Sidetiq.logger.info "Sidetiq::Clock lock #{key}" if acquired
-
       acquired
     end
 
@@ -46,8 +46,6 @@ module Sidetiq
           redis.multi do |multi|
             multi.del(key)
           end
-
-          Sidetiq.logger.info "Sidetiq::Clock unlock #{key}"
         end
       end
     end
