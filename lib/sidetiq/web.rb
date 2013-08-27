@@ -49,10 +49,5 @@ module Sidetiq
 end
 
 Sidekiq::Web.register(Sidetiq::Web)
-
-if Sidekiq::Web.tabs.is_a?(Array)
-  Sidekiq::Web.tabs << "sidetiq"
-else
-  Sidekiq::Web.tabs["Sidetiq"] = "sidetiq"
-end
+Sidekiq::Web.tabs["Sidetiq"] = "sidetiq"
 

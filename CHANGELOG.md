@@ -3,6 +3,7 @@
 
 - Bump Sidekiq dependency to ~> 2.14.0.
 - Use ERB templates instead of slim.
+- Don't check if `Sidekiq::Web.tabs` is an Array in Sidetiq::Web.
 
 0.3.6
 -----
