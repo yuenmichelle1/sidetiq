@@ -18,7 +18,7 @@ module Sidetiq
       app.get "/sidetiq" do
         @schedules = sidetiq_schedules
         @time = sidetiq_clock.gettime
-        slim File.read(File.join(VIEWS, 'sidetiq.slim'))
+        erb File.read(File.join(VIEWS, 'sidetiq.erb'))
       end
 
       app.get "/sidetiq/:name" do
@@ -30,7 +30,7 @@ module Sidetiq
           worker.name == name
         end.flatten
 
-        slim File.read(File.join(VIEWS, 'sidetiq_details.slim'))
+        erb File.read(File.join(VIEWS, 'sidetiq_details.erb'))
       end
 
       app.post "/sidetiq/:name/trigger" do

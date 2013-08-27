@@ -1,7 +1,8 @@
 0.3.7
 -----
 
-- Bump Sidekiq dependency to ~> 2.14.0
+- Bump Sidekiq dependency to ~> 2.14.0.
+- Use ERB templates instead of slim.
 
 0.3.6
 -----
