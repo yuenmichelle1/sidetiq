@@ -26,7 +26,7 @@ module Sidetiq
 
         @time = sidetiq_clock.gettime
 
-        @worker, @schedule = sidetiq_schedules.select do |worker, schedule|
+        @worker, @schedule = sidetiq_schedules.select do |worker, _|
           worker.name == name
         end.flatten
 
@@ -36,8 +36,8 @@ module Sidetiq
       app.post "/sidetiq/:name/trigger" do
         halt 404 unless (name = params[:name])
 
-        worker, _ = sidetiq_schedules.select do |worker, schedule|
-          worker.name == name
+        worker, _ = sidetiq_schedules.select do |w, _|
+          w.name == name
         end.flatten
 
         worker.perform_async
