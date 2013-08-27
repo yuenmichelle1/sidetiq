@@ -21,4 +21,10 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'sidekiq',  '~> 2.14.0'
   gem.add_dependency 'ice_cube', '~> 0.11.0'
+
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'sinatra'
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'mocha'
+  gem.add_development_dependency 'rack-test'
 end

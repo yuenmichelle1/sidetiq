@@ -5,6 +5,7 @@
 - Use ERB templates instead of slim.
 - Don't check if `Sidekiq::Web.tabs` is an Array in Sidetiq::Web.
 - Fix Ruby parser warnings in web.rb.
+- Move development dependencies from Gemfile to gemspec.
 
 0.3.6
 -----
