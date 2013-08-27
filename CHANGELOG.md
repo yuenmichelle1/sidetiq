@@ -6,6 +6,7 @@
 - Don't check if `Sidekiq::Web.tabs` is an Array in Sidetiq::Web.
 - Fix Ruby parser warnings in web.rb.
 - Move development dependencies from Gemfile to gemspec.
+- Use coveralls instead of simplecov.
 
 0.3.6
 -----
