@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.extensions    = []
 
-  gem.add_dependency 'sidekiq',  '~> 2.13.0'
+  gem.add_dependency 'sidekiq',  '~> 2.14.0'
   gem.add_dependency 'ice_cube', '~> 0.11.0'
 end

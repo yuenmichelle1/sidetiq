@@ -1,3 +1,8 @@
+0.3.7
+-----
+
+- Bump Sidekiq dependency to ~> 2.14.0
+
 0.3.6
 -----
 
