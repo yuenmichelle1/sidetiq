@@ -3,6 +3,7 @@ Sidetiq
 
 [![Build Status](https://travis-ci.org/tobiassvn/sidetiq.png)](https://travis-ci.org/tobiassvn/sidetiq)
 [![Dependency Status](https://gemnasium.com/tobiassvn/sidetiq.png)](https://gemnasium.com/tobiassvn/sidetiq)
+[![Coverage Status](https://coveralls.io/repos/tobiassvn/sidetiq/badge.png)](https://coveralls.io/r/tobiassvn/sidetiq)
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 
