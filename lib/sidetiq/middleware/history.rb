@@ -9,15 +9,10 @@ module Sidetiq
         end
       end
 
+      private
+
       def call_with_sidetiq_history(worker, msg, queue)
-        entry = {
-          status: :success,
-          error: "",
-          exception: "",
-          backtrace: "",
-          processor: "#{Socket.gethostname}:#{Process.pid}-#{Thread.current.object_id}",
-          processed: Time.now.iso8601
-        }
+        entry = new_history_entry
 
         yield
       rescue StandardError => e
@@ -28,6 +23,21 @@ module Sidetiq
 
         raise e
       ensure
+        save_entry_for_worker(entry, worker)
+      end
+
+      def new_history_entry
+        {
+          status: :success,
+          error: "",
+          exception: "",
+          backtrace: "",
+          processor: "#{Socket.gethostname}:#{Process.pid}-#{Thread.current.object_id}",
+          processed: Time.now.iso8601
+        }
+      end
+
+      def save_entry_for_worker(entry, worker)
         Sidekiq.redis do |redis|
           redis.pipelined do |pipe|
             list_name = "sidetiq:#{worker.class.name}:history"
