@@ -65,6 +65,10 @@ module Sidetiq
               redis.multi do |multi|
                 multi.del(key)
               end
+
+              true
+            else
+              false
             end
           end
         end
