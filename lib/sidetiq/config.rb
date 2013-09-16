@@ -22,5 +22,12 @@ module Sidetiq
       @config ||= OpenStruct.new
     end
   end
+
+  configure do |config|
+    config.priority = Thread.main.priority
+    config.resolution = 1
+    config.lock_expire = 1000
+    config.utc = false
+  end
 end
 
