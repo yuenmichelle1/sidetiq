@@ -10,8 +10,11 @@ module Sidetiq
     # Public: Sidetiq patch level.
     PATCH = 7
 
+    # Public: Sidetiq version suffix.
+    SUFFIX = 'rc1'
+
     # Public: String representation of the current Sidetiq version.
-    STRING = [MAJOR, MINOR, PATCH].compact.join('.')
+    STRING = [MAJOR, MINOR, PATCH, SUFFIX].compact.join('.')
   end
 end
 

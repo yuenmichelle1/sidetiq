@@ -1,4 +1,4 @@
-0.3.8
+0.4.0
 -----
 
 - Fix to work with workers with one optional argument [nata79]

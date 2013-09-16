@@ -15,7 +15,8 @@ class TestVersion < Sidetiq::TestCase
 
   def test_string
     assert_equal Sidetiq::VERSION::STRING, [Sidetiq::VERSION::MAJOR,
-      Sidetiq::VERSION::MINOR, Sidetiq::VERSION::PATCH].compact.join('.')
+                                            Sidetiq::VERSION::MINOR, Sidetiq::VERSION::PATCH,
+                                            Sidetiq::VERSION::SUFFIX].compact.join('.')
   end
 end
 
