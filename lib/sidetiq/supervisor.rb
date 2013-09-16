@@ -28,7 +28,9 @@ module Sidetiq
       private
 
       def motd
-        info "Sidetiq v#{VERSION::STRING} booting ..."
+        info "Sidetiq v#{VERSION::STRING} - Copyright (c) 2012-2013, Tobias Svensson <tob@tobiassvensson.co.uk>"
+        info "Sidetiq is covered by the 3-clause BSD license."
+        info "See LICENSE and http://opensource.org/licenses/BSD-3-Clause for licensing details."
       end
     end
   end
