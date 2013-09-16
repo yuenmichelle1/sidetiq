@@ -1,7 +1,17 @@
 0.4.0
 -----
 
-- Fix to work with workers with one optional argument [nata79]
+- Show job history in web extension.
+- Integrate with Sidekiq's exception handling/reporting in critical parts.
+- Store more detailed lock metadata.
+- Remove stray 'thead' from ERB template.
+- Store scheduled worker history in Redis.
+- Use a Celluloid pool of scheduling handlers to run calculations in parallel.
+- Use Celluloid actors instead of plain threads.
+- Fix to work with workers with one optional argument. [nata79]
+- Refactor top-level namespace methods into separate modules.
+- Add Procfile-based example code to boot Sidekiq and the web frontend
+  simultaneuously.
 
 0.3.7
 -----
