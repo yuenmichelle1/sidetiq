@@ -11,6 +11,18 @@ module Sidetiq
         erb File.read(File.join(VIEWS, 'sidetiq.erb'))
       end
 
+      app.get "/sidetiq/locks" do
+        Sidekiq.redis do |redis|
+          lock_keys = redis.keys('sidetiq:*:lock')
+
+          @locks = (lock_keys.any? ? redis.mget(*lock_keys) : []).map do |lock|
+            Sidetiq::Lock::MetaData.from_json(lock)
+          end
+        end
+
+        erb File.read(File.join(VIEWS, 'sidetiq_locks.erb'))
+      end
+
       app.get "/sidetiq/:name/schedule" do
         halt 404 unless (name = params[:name])
 

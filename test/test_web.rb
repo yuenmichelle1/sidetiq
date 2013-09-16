@@ -33,6 +33,11 @@ class TestWeb < Sidetiq::TestCase
     end
   end
 
+  def test_locks_page
+    get "/sidetiq/locks"
+    assert_equal 200, last_response.status
+  end
+
   def test_history_page
     get "/sidetiq/ScheduledWorker/history"
     assert_equal 200, last_response.status
