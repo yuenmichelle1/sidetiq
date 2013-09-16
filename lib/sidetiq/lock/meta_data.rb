@@ -34,10 +34,21 @@ module Sidetiq
         @key = hash[:key]
       end
 
+      def pttl
+        Sidekiq.redis { |r| r.pttl(key) }
+      end
+
       def to_json
         instance_variables.each_with_object({}) do |var, hash|
           hash[var.to_s.delete("@")] = instance_variable_get(var)
         end.to_json
+      end
+
+      def stale?
+        pttl_cached = pttl
+
+        pttl_cached < 0 || pttl_cached >= Sidetiq.config.lock_expire ||
+          timestamp < (Sidetiq.clock.gettime.to_i - 60)
       end
 
       def to_s

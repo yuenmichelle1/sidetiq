@@ -42,6 +42,18 @@ class TestLockMetaData < Sidetiq::TestCase
     assert_nil md.key
   end
 
+  def test_pttl
+    lock = Sidetiq::Lock::Redis.new("foobar", 1000000)
+    md = Sidekiq.redis do |r|
+      lock.send(:lock, r)
+      Sidetiq::Lock::MetaData.from_json(r.get(lock.key))
+    end
+
+    # Allow 10 ms.
+    assert md.pttl <= 1000000
+    assert md.pttl > 999990
+  end
+
   def test_from_json_with_malformed_json
     Sidetiq::Lock::MetaData.expects(:handle_exception).once
 
