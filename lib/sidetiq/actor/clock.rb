@@ -18,17 +18,12 @@ module Sidetiq
       private
 
       def loop!
-        offset = time do
-          begin
-            tick
-          rescue StandardError => e
-            handle_exception(e, context: 'Sidetiq::Clock#loop!')
-          end
-        end
-
         after([time { tick }, 0].max) do
           loop!
         end
+      rescue StandardError => e
+        handle_exception(e, context: 'Sidetiq::Clock#loop!')
+        retry
       end
 
       def time
