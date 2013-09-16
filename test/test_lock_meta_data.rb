@@ -45,7 +45,7 @@ class TestLockMetaData < Sidetiq::TestCase
   def test_pttl
     lock = Sidetiq::Lock::Redis.new("foobar", 1000000)
     md = Sidekiq.redis do |r|
-      lock.send(:lock, r)
+      lock.lock
       Sidetiq::Lock::MetaData.from_json(r.get(lock.key))
     end
 

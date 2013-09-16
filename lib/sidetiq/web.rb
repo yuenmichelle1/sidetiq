@@ -12,13 +12,7 @@ module Sidetiq
       end
 
       app.get "/sidetiq/locks" do
-        Sidekiq.redis do |redis|
-          lock_keys = redis.keys('sidetiq:*:lock')
-
-          @locks = (lock_keys.any? ? redis.mget(*lock_keys) : []).map do |lock|
-            Sidetiq::Lock::MetaData.from_json(lock)
-          end
-        end
+        @locks = Sidetiq::Lock::Redis.all.map(&:meta_data)
 
         erb File.read(File.join(VIEWS, 'sidetiq_locks.erb'))
       end
