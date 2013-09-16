@@ -2,7 +2,9 @@
 
 require 'sidekiq'
 require 'sidetiq'
+
 require_relative 'workers/simple'
+require_relative 'workers/failing'
 
 Sidekiq.logger.level = Logger::DEBUG
 

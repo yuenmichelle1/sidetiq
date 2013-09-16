@@ -20,6 +20,9 @@ require 'sidetiq/schedule'
 require 'sidetiq/schedulable'
 require 'sidetiq/version'
 
+# middleware
+require 'sidetiq/middleware/history'
+
 # actor topology
 require 'sidetiq/actor/clock'
 require 'sidetiq/actor/handler'
