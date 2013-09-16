@@ -2,6 +2,7 @@ module Sidetiq
   module Actor
     class Clock < Sidetiq::Clock
       include Celluloid
+      include Sidekiq::ExceptionHandler
 
       # Public: Starts and supervises the clock actor.
       def self.start!
@@ -17,6 +18,14 @@ module Sidetiq
       private
 
       def loop!
+        offset = time do
+          begin
+            tick
+          rescue StandardError => e
+            handle_exception(e, context: 'Sidetiq::Clock#loop!')
+          end
+        end
+
         after([time { tick }, 0].max) do
           loop!
         end
