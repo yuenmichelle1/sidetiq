@@ -4,7 +4,7 @@ module Sidetiq
       include Celluloid
 
       def initialize
-        debug "Sidetiq::Handler initialize #{object_id}"
+        info "Sidetiq::Handler initialize #{object_id}"
         super
       end
     end

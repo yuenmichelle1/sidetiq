@@ -4,14 +4,9 @@ module Sidetiq
       include Celluloid
       include Sidekiq::ExceptionHandler
 
-      # Public: Starts and supervises the clock actor.
-      def self.start!
-        actor.start!
-      end
-
       # Public: Starts the clock loop.
       def start!
-        debug "Sidetiq::Clock start"
+        info "Sidetiq::Clock start"
         loop!
       end
 

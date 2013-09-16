@@ -23,14 +23,14 @@ module Sidetiq
 
       def run!
         motd
-        debug "Sidetiq::Supervisor start"
+        info "Sidetiq::Supervisor start"
 
         super
       end
 
       def run
         motd
-        debug "Sidetiq::Supervisor start (foreground)"
+        info "Sidetiq::Supervisor start (foreground)"
 
         super
       end
