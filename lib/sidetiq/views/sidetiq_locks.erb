@@ -16,8 +16,9 @@
         <thead>
           <th style="width: 20%">Key</th>
           <th style="width: 30%">Owner Node</th>
-          <th style="width: 20%">Timetamp</th>
+          <th style="width: 10%">Timetamp</th>
           <th style="width: 10%">TTL</th>
+          <th style="width: 10%">Actions</th>
         </thead>
 
         <% @locks.each do |meta| %>
@@ -26,10 +27,15 @@
         <tr class="<%= 'error' if meta.stale? %>">
           <td><%= meta.key %></td>
           <td><%= meta.owner %></td>
-          <td><%= meta.timestamp %></td>
+          <td><%= meta.timestamp.to_i %></td>
           <td>
             <%= pttl / 1000 %> s
           </td>
+            <td>
+              <form action="<%= "#{root_path}sidetiq/#{meta.key}/unlock" %>" method="post">
+                <input class="btn btn-danger btn-small" type="submit" name="trigger" value="Unlock" data-confirm="Are you sure you want remove this lock?" />
+              </form>
+            </td>
         </tr>
         <% end %>
       </table>

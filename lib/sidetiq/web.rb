@@ -56,6 +56,14 @@ module Sidetiq
 
         redirect "#{root_path}sidetiq"
       end
+
+      app.post "/sidetiq/:name/unlock" do
+        halt 404 unless (name = params[:name])
+
+        Sidetiq::Lock::Redis.new(name).unlock!
+
+        redirect "#{root_path}sidetiq/locks"
+      end
     end
   end
 end

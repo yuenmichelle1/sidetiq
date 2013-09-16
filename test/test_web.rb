@@ -67,5 +67,19 @@ class TestWeb < Sidetiq::TestCase
     assert_equal "http://#{host}/sidetiq", last_response.location
     assert_equal 1, ScheduledWorker.jobs.size
   end
+
+  def test_unlock
+    Sidekiq.redis do |redis|
+      redis.set("sidetiq:Foo:lock", 1)
+    end
+
+    post "/sidetiq/Foo/unlock"
+    assert_equal 302, last_response.status
+    assert_equal "http://#{host}/sidetiq/locks", last_response.location
+
+    Sidekiq.redis do |redis|
+      assert_nil redis.get("sidetiq:Foo:lock")
+    end
+  end
 end
 
