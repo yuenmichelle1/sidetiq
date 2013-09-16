@@ -1,3 +1,8 @@
+0.3.8
+-----
+
+- Fix to work with workers with one optional argument [nata79]
+
 0.3.7
 -----
 
