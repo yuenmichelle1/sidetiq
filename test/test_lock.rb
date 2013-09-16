@@ -21,8 +21,21 @@ class TestLock < Sidetiq::TestCase
     end
   end
 
+  def test_lock_sets_correct_meta_data
+    key = SecureRandom.hex(8)
+    internal_key = "sidetiq:#{key}:lock"
+
+    locked(key) do |redis|
+      json = redis.get(internal_key)
+      md = Sidetiq::Lock::MetaData.from_json(json)
+
+      assert_equal Sidetiq::Lock::MetaData::OWNER, md.owner
+      assert_equal internal_key, md.key
+    end
+  end
+
   def locked(lock_name)
-    Sidetiq::Lock.new(lock_name).synchronize do |redis|
+    Sidetiq::Lock::Redis.new(lock_name).synchronize do |redis|
       yield redis
     end
   end

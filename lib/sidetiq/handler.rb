@@ -6,7 +6,7 @@ module Sidetiq
     def dispatch(worker, sched, tick)
       return unless sched.schedule_next?(tick)
 
-      Lock.new(worker).synchronize do |redis|
+      Lock::Redis.new(worker).synchronize do |redis|
         if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
           last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
           sched.occurrences_between(last + 1, tick).each do |past_t|
