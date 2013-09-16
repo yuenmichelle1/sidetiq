@@ -74,6 +74,12 @@ module Sidetiq
         end
       end
 
+      def unlock!
+        Sidekiq.redis do |redis|
+          redis.del(key)
+        end
+      end
+
       private
 
       def extract_key(key)

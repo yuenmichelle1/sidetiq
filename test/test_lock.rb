@@ -31,6 +31,16 @@ class TestLock < Sidetiq::TestCase
     assert_equal "sidetiq:Foobar:lock", locks.first.key
   end
 
+  def test_unlock!
+    Sidekiq.redis do |redis|
+      redis.set("sidetiq:Foobar:lock", 1)
+
+      Sidetiq::Lock::Redis.new("Foobar").unlock!
+
+      assert_nil redis.get("sidetiq:Foobar:lock")
+    end
+  end
+
   def test_lock_sets_correct_meta_data
     key = SecureRandom.hex(8)
     internal_key = "sidetiq:#{key}:lock"
