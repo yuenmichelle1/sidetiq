@@ -1,6 +1,7 @@
 module Sidetiq
   class Handler
     include Logging
+    include Sidekiq::ExceptionHandler
 
     def dispatch(worker, sched, tick)
       return unless sched.schedule_next?(tick)
@@ -15,6 +16,8 @@ module Sidetiq
 
         enqueue(worker, sched.next_occurrence(tick), redis)
       end
+    rescue StandardError => e
+      handle_exception(e, context: "Sidetiq::Handler#dispatch")
     end
 
     private
@@ -38,6 +41,8 @@ module Sidetiq
           worker.perform_at(time, next_run, time_f)
         end
       end
+    rescue StandardError => e
+      handle_exception(e, context: "Sidetiq::Handler#enqueue")
     end
   end
 end
