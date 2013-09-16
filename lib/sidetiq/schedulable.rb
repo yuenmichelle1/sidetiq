@@ -31,11 +31,9 @@ module Sidetiq
 
       def recurrence(options = {}, &block) # :nodoc:
         clock = Sidetiq::Clock.instance
-        clock.mon_synchronize do
-          schedule = clock.schedule_for(self)
-          schedule.instance_eval(&block)
-          schedule.set_options(options)
-        end
+        schedule = clock.schedule_for(self)
+        schedule.instance_eval(&block)
+        schedule.set_options(options)
       end
 
       private

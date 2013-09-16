@@ -9,7 +9,6 @@ module Sidetiq
   # Public: The Sidetiq clock.
   class Clock
     include Singleton
-    include MonitorMixin
 
     # Internal: Returns a hash of Sidetiq::Schedule instances.
     attr_reader :schedules
@@ -50,18 +49,16 @@ module Sidetiq
     # Returns a hash of Sidetiq::Schedule instances.
     def tick
       tick = gettime
-      mon_synchronize do
-        schedules.each do |worker, sched|
-          Lock.new(worker).synchronize do |redis|
-            if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
-              last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
-              sched.occurrences_between(last + 1, tick).each do |past_t|
-                enqueue(worker, past_t, redis)
-              end
+      schedules.each do |worker, sched|
+        Lock.new(worker).synchronize do |redis|
+          if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
+            last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
+            sched.occurrences_between(last + 1, tick).each do |past_t|
+              enqueue(worker, past_t, redis)
             end
-            enqueue(worker, sched.next_occurrence(tick), redis)
-          end if sched.schedule_next?(tick)
-        end
+          end
+          enqueue(worker, sched.next_occurrence(tick), redis)
+        end if sched.schedule_next?(tick)
       end
     end
 

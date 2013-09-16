@@ -1,5 +1,4 @@
 # stdlib
-require 'monitor'
 require 'ostruct'
 require 'singleton'
 require 'socket'
@@ -37,9 +36,7 @@ module Sidetiq
 
     # Public: Returns a Hash of Sidetiq::Schedule instances.
     def schedules
-      Clock.mon_synchronize do
-        Clock.schedules.dup
-      end
+      Clock.schedules.dup
     end
 
     # Public: Currently scheduled recurring jobs.
