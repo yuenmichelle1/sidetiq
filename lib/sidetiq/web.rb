@@ -11,7 +11,7 @@ module Sidetiq
         erb File.read(File.join(VIEWS, 'sidetiq.erb'))
       end
 
-      app.get "/sidetiq/:name" do
+      app.get "/sidetiq/:name/schedule" do
         halt 404 unless (name = params[:name])
 
         @time = Sidetiq.clock.gettime
@@ -20,7 +20,23 @@ module Sidetiq
           worker.name == name
         end.flatten
 
-        erb File.read(File.join(VIEWS, 'sidetiq_details.erb'))
+        erb File.read(File.join(VIEWS, 'sidetiq_schedule.erb'))
+      end
+
+      app.get "/sidetiq/:name/history" do
+        halt 404 unless (name = params[:name])
+
+        @time = Sidetiq.clock.gettime
+
+        @worker, @schedule = Sidetiq.schedules.select do |worker, _|
+          worker.name == name
+        end.flatten
+
+        @history = Sidekiq.redis do |redis|
+          redis.lrange("sidetiq:#{@worker.name}:history", 0, -1)
+        end
+
+        erb File.read(File.join(VIEWS, 'sidetiq_history.erb'))
       end
 
       app.post "/sidetiq/:name/trigger" do

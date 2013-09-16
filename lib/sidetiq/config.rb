@@ -24,7 +24,7 @@ module Sidetiq
   end
 
   configure do |config|
-    config.worker_history = 100
+    config.worker_history = 50
     config.resolution = 1
     config.lock_expire = 1000
     config.utc = false

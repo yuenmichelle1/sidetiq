@@ -21,8 +21,8 @@ class TestHistory < Sidetiq::TestCase
     assert_empty actual[:backtrace]
     assert_empty actual[:exception]
 
-    refute_empty actual[:processor]
-    refute_empty actual[:processed]
+    refute_empty actual[:node]
+    refute_empty actual[:timestamp]
   end
 
   def test_failure
@@ -45,8 +45,8 @@ class TestHistory < Sidetiq::TestCase
     assert_equal "StandardError", actual[:exception]
     refute_empty actual[:backtrace]
 
-    refute_empty actual[:processor]
-    refute_empty actual[:processed]
+    refute_empty actual[:node]
+    refute_empty actual[:timestamp]
   end
 
   def middlewared

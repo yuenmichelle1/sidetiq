@@ -32,8 +32,8 @@ module Sidetiq
           error: "",
           exception: "",
           backtrace: "",
-          processor: "#{Socket.gethostname}:#{Process.pid}-#{Thread.current.object_id}",
-          processed: Time.now.iso8601
+          node: "#{Socket.gethostname}:#{Process.pid}-#{Thread.current.object_id}",
+          timestamp: Time.now.iso8601
         }
       end
 

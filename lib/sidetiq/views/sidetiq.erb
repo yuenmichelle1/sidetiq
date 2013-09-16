@@ -15,7 +15,7 @@
     <% @schedules.each do |worker, schedule| %>
       <tr>
         <td>
-          <a href="<%= "#{root_path}sidetiq/#{worker.name}" %>"><%= worker.name %></a>
+          <a href="<%= "#{root_path}sidetiq/#{worker.name}/schedule" %>"><%= worker.name %></a>
         <td><%= worker.get_sidekiq_options["queue"] %></td>
         <td>
           <%= relative_time(schedule.next_occurrence(@time)) %>
