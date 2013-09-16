@@ -8,7 +8,7 @@ module Sidetiq
 
     # Public: Returns a Hash of Sidetiq::Schedule instances.
     def schedules
-      Clock.schedules.dup
+      clock.schedules.dup
     end
 
     # Public: Currently scheduled recurring jobs.

@@ -1,14 +1,12 @@
 module Sidetiq
   # Public: Sidetiq logging interface.
   module Logging
-    # Public: Setter for the Sidetiq logger.
-    attr_writer :logger
+    %w(fatal error warn info debug).each do |level|
+      level = level.to_sym
 
-    # Public: Reader for the Sidetiq logger.
-    #
-    # Defaults to `Sidekiq.logger`.
-    def logger
-      @logger ||= Sidekiq.logger
+      define_method(level) do |msg|
+        Sidetiq.logger.__send__(level, "[Sidetiq] #{msg}")
+      end
     end
   end
 end

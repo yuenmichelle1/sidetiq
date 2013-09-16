@@ -12,6 +12,8 @@ module Sidetiq
   #   end
   module Schedulable
     module ClassMethods
+      include Logging
+
       # Public: Returns a Float timestamp of the last scheduled run.
       def last_scheduled_occurrence
         get_timestamp "last"
@@ -23,15 +25,14 @@ module Sidetiq
       end
 
       def tiq(*args, &block) # :nodoc:
-        Sidetiq.logger.warn "DEPRECATION WARNING: Sidetiq::Schedulable#tiq" <<
+        warn "DEPRECATION WARNING: Sidetiq::Schedulable#tiq" <<
           " is deprecated and will be removed. Use" <<
           " Sidetiq::Schedulable#recurrence instead."
         recurrence(*args, &block)
       end
 
       def recurrence(options = {}, &block) # :nodoc:
-        clock = Sidetiq::Clock.instance
-        schedule = clock.schedule_for(self)
+        schedule = Sidetiq.clock.schedule_for(self)
         schedule.instance_eval(&block)
         schedule.set_options(options)
       end

@@ -1,5 +1,7 @@
 module Sidetiq
   class Lock # :nodoc: all
+    include Logging
+
     attr_reader :key, :timeout
 
     OWNER = "#{Socket.gethostname}:#{Process.pid}"
@@ -12,13 +14,13 @@ module Sidetiq
     def synchronize
       Sidekiq.redis do |redis|
         if lock(redis)
-          Sidetiq.logger.debug "Sidetiq::Clock lock #{key}"
+          debug "Sidetiq::Clock lock #{key}"
 
           begin
             yield redis
           ensure
             unlock(redis)
-            Sidetiq.logger.debug "Sidetiq::Clock unlock #{key}"
+            debug "Sidetiq::Clock unlock #{key}"
           end
         end
       end

@@ -5,28 +5,18 @@ module Sidetiq
     VIEWS = File.expand_path('views', File.dirname(__FILE__))
 
     def self.registered(app)
-      app.helpers do
-        def sidetiq_clock
-          Sidetiq::Clock.instance
-        end
-
-        def sidetiq_schedules
-          sidetiq_clock.schedules
-        end
-      end
-
       app.get "/sidetiq" do
-        @schedules = sidetiq_schedules
-        @time = sidetiq_clock.gettime
+        @schedules = Sidetiq.schedules
+        @time = Sidetiq.clock.gettime
         erb File.read(File.join(VIEWS, 'sidetiq.erb'))
       end
 
       app.get "/sidetiq/:name" do
         halt 404 unless (name = params[:name])
 
-        @time = sidetiq_clock.gettime
+        @time = Sidetiq.clock.gettime
 
-        @worker, @schedule = sidetiq_schedules.select do |worker, _|
+        @worker, @schedule = Sidetiq.schedules.select do |worker, _|
           worker.name == name
         end.flatten
 
@@ -36,7 +26,7 @@ module Sidetiq
       app.post "/sidetiq/:name/trigger" do
         halt 404 unless (name = params[:name])
 
-        worker, _ = sidetiq_schedules.select do |w, _|
+        worker, _ = Sidetiq.schedules.select do |w, _|
           w.name == name
         end.flatten
 

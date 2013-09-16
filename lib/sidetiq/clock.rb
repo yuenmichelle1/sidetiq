@@ -1,24 +1,10 @@
 module Sidetiq
-  configure do |config|
-    config.priority = Thread.main.priority
-    config.resolution = 1
-    config.lock_expire = 1000
-    config.utc = false
-  end
-
   # Public: The Sidetiq clock.
   class Clock
-    include Singleton
+    include Logging
 
     # Internal: Returns a hash of Sidetiq::Schedule instances.
     attr_reader :schedules
-
-    # Internal: Returns the clock thread.
-    attr_reader :thread
-
-    def self.method_missing(meth, *args, &block) # :nodoc:
-      instance.__send__(meth, *args, &block)
-    end
 
     def initialize # :nodoc:
       super
@@ -74,56 +60,6 @@ module Sidetiq
       Sidetiq.config.utc ? Time.now.utc : Time.now
     end
 
-    # Public: Starts the clock unless it is already running.
-    #
-    # Examples
-    #
-    #   start!
-    #   # => Thread
-    #
-    # Returns the Thread instance of the clock thread.
-    def start!
-      return if ticking?
-
-      Sidetiq.logger.info "Sidetiq::Clock start"
-
-      @thread = Thread.start { clock { tick } }
-      @thread.abort_on_exception = true
-      @thread.priority = Sidetiq.config.priority
-      @thread
-    end
-
-    # Public: Stops the clock if it is running.
-    #
-    # Examples
-    #
-    #   stop!
-    #   # => nil
-    #
-    # Returns nil.
-    def stop!
-      if ticking?
-        @thread.kill
-        Sidetiq.logger.info "Sidetiq::Clock stop"
-      end
-    end
-
-    # Public: Returns the status of the clock.
-    #
-    # Examples
-    #
-    #   ticking?
-    #   # => false
-    #
-    #   start!
-    #   ticking?
-    #   # => true
-    #
-    # Returns true or false.
-    def ticking?
-      @thread && @thread.alive?
-    end
-
     private
 
     def enqueue(worker, time, redis)
@@ -132,7 +68,7 @@ module Sidetiq
       next_run = (redis.get("#{key}:next") || -1).to_f
 
       if next_run < time_f
-        Sidetiq.logger.info "Sidetiq::Clock enqueue #{worker.name} (at: #{time_f}) (last: #{next_run})"
+        info "Enqueue: #{worker.name} (at: #{time_f}) (last: #{next_run})"
 
         redis.mset("#{key}:last", next_run, "#{key}:next", time_f)
 
@@ -145,23 +81,6 @@ module Sidetiq
           worker.perform_at(time, next_run, time_f)
         end
       end
-    end
-
-    def clock
-      loop do
-        sleep_time = time { yield }
-
-        if sleep_time > 0
-          Thread.pass
-          sleep sleep_time
-        end
-      end
-    end
-
-    def time
-      start = gettime
-      yield
-      Sidetiq.config.resolution - (gettime.to_f - start.to_f)
     end
   end
 end

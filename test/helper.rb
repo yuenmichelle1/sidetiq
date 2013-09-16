@@ -13,6 +13,12 @@ require 'sidekiq/testing'
 require 'sidetiq'
 require 'sidetiq/web'
 
+class Sidetiq::Supervisor
+  def self.clock
+    @clock ||= Sidetiq::Clock.new
+  end
+end
+
 # Keep the test output clean.
 Sidetiq.logger = Logger.new(nil)
 
@@ -40,7 +46,7 @@ class Sidetiq::TestCase < MiniTest::Unit::TestCase
   end
 
   def clock
-    @clock ||= Sidetiq::Clock.instance
+    Sidetiq.clock
   end
 
   # Blatantly stolen from Sidekiq's test suite.

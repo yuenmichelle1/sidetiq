@@ -3,10 +3,12 @@
 require 'sidekiq'
 require 'sidetiq'
 
+Sidekiq.logger.level = Logger::DEBUG
+
 Sidekiq.options[:poll_interval] = 1
 
 Sidekiq.configure_server do |config|
-  Sidetiq::Clock.start!
+  Sidetiq.clock.start!
 end
 
 class MyWorker
