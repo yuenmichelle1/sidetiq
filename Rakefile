@@ -1,8 +1,3 @@
-require 'bundler/gem_tasks'
-require 'rake/testtask'
+Dir["tasks/**/*.task"].each { |task| load task }
 
-Rake::TestTask.new do |t|
-  t.pattern = 'test/**/test_*.rb'
-end
-
-task default: :test
+task :default => :test
