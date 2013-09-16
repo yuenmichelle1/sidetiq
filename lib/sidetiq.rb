@@ -13,6 +13,7 @@ require 'sidetiq/config'
 require 'sidetiq/logging'
 require 'sidetiq/api'
 require 'sidetiq/clock'
+require 'sidetiq/handler'
 require 'sidetiq/lock'
 require 'sidetiq/schedule'
 require 'sidetiq/schedulable'
@@ -20,6 +21,7 @@ require 'sidetiq/version'
 
 # actor topology
 require 'sidetiq/actor/clock'
+require 'sidetiq/actor/handler'
 require 'sidetiq/supervisor'
 
 # The Sidetiq namespace.
@@ -44,5 +46,10 @@ module Sidetiq
   # Public: Returns the Sidetiq::Clock actor.
   def clock
     Sidetiq::Supervisor.clock
+  end
+
+  # Public: Returns a Sidetiq::Handler worker.
+  def handler
+    Sidetiq::Supervisor.handler
   end
 end

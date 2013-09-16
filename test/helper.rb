@@ -17,6 +17,10 @@ class Sidetiq::Supervisor
   def self.clock
     @clock ||= Sidetiq::Clock.new
   end
+
+  def self.handler
+    Sidetiq::Handler.new
+  end
 end
 
 # Keep the test output clean.

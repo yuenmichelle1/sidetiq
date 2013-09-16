@@ -2,13 +2,23 @@ module Sidetiq
   class Supervisor < Celluloid::SupervisionGroup
     supervise Sidetiq::Actor::Clock, as: :sidetiq_clock
 
+    if Sidekiq.server?
+      pool Sidetiq::Actor::Handler,
+           as: :sidetiq_handler,
+           size: Sidetiq.config.handler_pool_size
+    end
+
     class << self
       include Logging
 
       def clock
         run! if Celluloid::Actor[:sidetiq_clock].nil?
-
         Celluloid::Actor[:sidetiq_clock]
+      end
+
+      def handler
+        run! if Celluloid::Actor[:sidetiq_handler].nil?
+        Celluloid::Actor[:sidetiq_handler]
       end
 
       def run!
