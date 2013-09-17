@@ -1,19 +1,19 @@
 <div class="span3">
   <ul class="nav nav-list sidetiq-sidenav">
     <li>
-      <a href="/sidetiq">
+      <a href="<%= "#{root_path}sidetiq" %>">
         <i class="icon-chevron-right"></i>
         Home
       </a>
     </li>
     <li>
-      <a href="/sidetiq/<%= @worker.name %>/schedule">
+      <a href="<%= "#{root_path}sidetiq/#{@worker.name}/schedule" %>">
         <i class="icon-chevron-right"></i>
         Job Schedule
       </a>
     </li>
     <li>
-      <a href="/sidetiq/<%= @worker.name %>/history">
+      <a href="<%= "#{root_path}sidetiq/#{@worker.name}/history" %>">
         <i class="icon-chevron-right"></i>
         Job History
       </a>
