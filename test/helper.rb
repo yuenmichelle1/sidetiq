@@ -66,7 +66,7 @@ class Sidetiq::TestCase < MiniTest::Test
   end
 end
 
-# Override Celluloid's at_exit hook.
+# Override Celluloid's at_exit hook manually.
 at_exit {
-  Minitest.run ARGV
+  exit Minitest.run(ARGV) || false
 }
