@@ -174,10 +174,6 @@ Configuration
 
 ```ruby
 Sidetiq.configure do |config|
-  # Thread priority of the clock thread (default: Thread.main.priority as
-  # defined when Sidetiq is loaded).
-  config.priority = 2
-
   # Clock tick resolution in seconds (default: 1).
   config.resolution = 0.5
 
@@ -186,6 +182,9 @@ Sidetiq.configure do |config|
 
   # When `true` uses UTC instead of local times (default: false)
   config.utc = false
+
+  # Scheduling handler pool size (default: number of CPUs)
+  config.handler_pool_size = 5
 end
 ```
 <a name='section_Configuration_Logging'></a>
