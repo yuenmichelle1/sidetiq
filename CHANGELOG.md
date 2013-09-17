@@ -1,6 +1,7 @@
 0.4.0
 -----
 
+- Clock now start looping automatically if `Sidekiq.server?` returns true.
 - Show job history in web extension.
 - Integrate with Sidekiq's exception handling/reporting in critical parts.
 - Store more detailed lock metadata.
