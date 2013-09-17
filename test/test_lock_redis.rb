@@ -1,6 +1,6 @@
 require_relative 'helper'
 
-class TestLock < Sidetiq::TestCase
+class TestLockRedis < Sidetiq::TestCase
   def test_locking
     lock_name = SecureRandom.hex(8)
     key = SecureRandom.hex(8)
