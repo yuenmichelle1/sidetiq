@@ -12,6 +12,7 @@
 - Refactor top-level namespace methods into separate modules.
 - Add Procfile-based example code to boot Sidekiq and the web frontend
   simultaneuously.
+- Experimental watcher worker to remove invalid locks.
 
 0.3.7
 -----
