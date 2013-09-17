@@ -14,7 +14,6 @@ module Sidetiq
     extend SubclassTracking
 
     module ClassMethods
-      include Logging
       include SubclassTracking
 
       attr_writer :schedule
