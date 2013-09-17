@@ -24,7 +24,7 @@
         <% @locks.each do |meta| %>
         <% pttl = meta.pttl %>
 
-        <tr class="<%= 'error' if meta.stale? %>">
+        <tr>
           <td><%= meta.key %></td>
           <td><%= meta.owner %></td>
           <td><%= meta.timestamp.to_i %></td>

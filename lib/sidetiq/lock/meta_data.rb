@@ -44,13 +44,6 @@ module Sidetiq
         end.to_json
       end
 
-      def stale?
-        pttl_cached = pttl
-
-        pttl_cached < 0 || pttl_cached >= Sidetiq.config.lock_expire ||
-          timestamp < (Sidetiq.clock.gettime.to_i - 60)
-      end
-
       def to_s
         "Sidetiq::Lock on #{key} set at #{timestamp} by #{owner}"
       end

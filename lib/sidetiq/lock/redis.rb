@@ -35,6 +35,16 @@ module Sidetiq
         end
       end
 
+      def stale?
+        pttl = meta_data.pttl
+
+        # Consider PTTL of -1 (never set) and larger than the
+        # configured lock_expire as invalid. Locks with timestamps
+        # older than 1 minute are also considered stale.
+        pttl < 0 || pttl >= Sidetiq.config.lock_expire ||
+          meta_data.timestamp < (Sidetiq.clock.gettime.to_i - 60)
+      end
+
       def meta_data
         @meta_data ||= Sidekiq.redis do |redis|
           MetaData.from_json(redis.get(key))
