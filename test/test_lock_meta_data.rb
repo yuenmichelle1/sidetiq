@@ -71,13 +71,14 @@ class TestLockMetaData < Sidetiq::TestCase
     assert_equal "baz", md.key
 
     assert md.timestamp > 0
-    assert md.timestamp < Time.now.to_f
+    assert md.timestamp <= Time.now.to_f
   end
 
   def test_to_json
-    md = Sidetiq::Lock::MetaData.new(timestamp: 42, owner: "me", key: "foobar")
+    hash = { timestamp: 42, owner: "me", key: "foobar" }
+    md = Sidetiq::Lock::MetaData.new(hash)
 
-    assert_equal '{"owner":"me","timestamp":42,"key":"foobar"}', md.to_json
+    assert_equal hash, JSON.parse(md.to_json, symbolize_names: true)
   end
 
   def test_to_s
