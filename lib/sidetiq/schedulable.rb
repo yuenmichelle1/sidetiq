@@ -11,12 +11,22 @@ module Sidetiq
   #     recurrence { daily }
   #   end
   module Schedulable
+    extend SubclassTracking
+
     module ClassMethods
       include Logging
+      include SubclassTracking
+
+      attr_writer :schedule
 
       # Public: Returns a Float timestamp of the last scheduled run.
       def last_scheduled_occurrence
         get_timestamp "last"
+      end
+
+      # Public: Returns the Sidetiq::Schedule for this worker.
+      def schedule
+        @schedule ||= Sidetiq::Schedule.new
       end
 
       # Public: Returns a Float timestamp of the next scheduled run.
@@ -32,7 +42,6 @@ module Sidetiq
       end
 
       def recurrence(options = {}, &block) # :nodoc:
-        schedule = Sidetiq.clock.schedule_for(self)
         schedule.instance_eval(&block)
         schedule.set_options(options)
       end
@@ -47,7 +56,11 @@ module Sidetiq
     end
 
     def self.included(klass) # :nodoc:
+      super
+
       klass.extend(Sidetiq::Schedulable::ClassMethods)
+      klass.extend(Sidetiq::SubclassTracking)
+      subclasses << klass
     end
   end
 end

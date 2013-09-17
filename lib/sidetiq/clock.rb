@@ -8,7 +8,6 @@ module Sidetiq
 
     def initialize # :nodoc:
       super
-      @schedules = {}
     end
 
     # Public: Get the schedule for `worker`.
@@ -22,7 +21,9 @@ module Sidetiq
     #
     # Returns a Sidetiq::Schedule instances.
     def schedule_for(worker)
-      schedules[worker] ||= Sidetiq::Schedule.new
+      if worker.respond_to?(:schedule)
+        worker.schedule
+      end
     end
 
     # Public: Issue a single clock tick.
@@ -35,8 +36,8 @@ module Sidetiq
     # Returns a hash of Sidetiq::Schedule instances.
     def tick
       tick = gettime
-      schedules.each do |worker, sched|
-        Sidetiq.handler.dispatch(worker,sched, tick)
+      Sidetiq.workers.each do |worker|
+        Sidetiq.handler.dispatch(worker, tick)
       end
     end
 

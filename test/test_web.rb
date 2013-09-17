@@ -14,6 +14,7 @@ class TestWeb < Sidetiq::TestCase
   def setup
     super
     ScheduledWorker.jobs.clear
+    Sidetiq.stubs(:workers).returns([ScheduledWorker])
   end
 
   def test_home_tab
@@ -27,7 +28,7 @@ class TestWeb < Sidetiq::TestCase
     get '/sidetiq'
     assert_equal 200, last_response.status
 
-    clock.schedules.each do |worker, schedule|
+    Sidetiq.workers.each do |worker|
       assert_match /#{worker.name}/, last_response.body
       assert_match /#{worker.get_sidekiq_options['queue']}/, last_response.body
     end
@@ -46,7 +47,7 @@ class TestWeb < Sidetiq::TestCase
   def test_schedule_page
     get "/sidetiq/ScheduledWorker/schedule"
     assert_equal 200, last_response.status
-    schedule = clock.schedules[ScheduledWorker]
+    schedule = ScheduledWorker.schedule
 
     schedule.recurrence_rules.each do |rule|
       assert_match /#{rule.to_s}/, last_response.body

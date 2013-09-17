@@ -2,6 +2,7 @@
 require 'ostruct'
 require 'singleton'
 require 'socket'
+require 'time'
 
 # gems
 require 'ice_cube'
@@ -12,6 +13,7 @@ require 'celluloid'
 require 'sidetiq/config'
 require 'sidetiq/logging'
 require 'sidetiq/api'
+require 'sidetiq/subclass_tracking'
 require 'sidetiq/clock'
 require 'sidetiq/handler'
 require 'sidetiq/lock/meta_data'
@@ -57,4 +59,8 @@ module Sidetiq
   def handler
     Sidetiq::Supervisor.handler
   end
+end
+
+if Sidekiq.server?
+  Sidetiq::Supervisor.run!
 end

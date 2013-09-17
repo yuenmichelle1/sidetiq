@@ -6,7 +6,7 @@ module Sidetiq
 
     def self.registered(app)
       app.get "/sidetiq" do
-        @schedules = Sidetiq.schedules
+        @workers = Sidetiq.workers
         @time = Sidetiq.clock.gettime
         erb File.read(File.join(VIEWS, 'sidetiq.erb'))
       end
@@ -22,9 +22,11 @@ module Sidetiq
 
         @time = Sidetiq.clock.gettime
 
-        @worker, @schedule = Sidetiq.schedules.select do |worker, _|
+        @worker = Sidetiq.workers.detect do |worker|
           worker.name == name
-        end.flatten
+        end
+
+        @schedule = @worker.schedule
 
         erb File.read(File.join(VIEWS, 'schedule.erb'))
       end
@@ -34,12 +36,12 @@ module Sidetiq
 
         @time = Sidetiq.clock.gettime
 
-        @worker, @schedule = Sidetiq.schedules.select do |worker, _|
+        @worker = Sidetiq.workers.detect do |worker|
           worker.name == name
-        end.flatten
+        end
 
         @history = Sidekiq.redis do |redis|
-          redis.lrange("sidetiq:#{@worker.name}:history", 0, -1)
+          redis.lrange("sidetiq:#{name}:history", 0, -1)
         end
 
         erb File.read(File.join(VIEWS, 'history.erb'))
@@ -48,9 +50,9 @@ module Sidetiq
       app.post "/sidetiq/:name/trigger" do
         halt 404 unless (name = params[:name])
 
-        worker, _ = Sidetiq.schedules.select do |w, _|
-          w.name == name
-        end.flatten
+        worker = Sidetiq.workers.detect do |worker|
+          worker.name == name
+        end
 
         worker.perform_async
 

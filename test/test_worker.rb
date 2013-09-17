@@ -24,6 +24,6 @@ class TestWorker < Sidetiq::TestCase
   end
 
   def test_options
-    assert Sidetiq.schedules[BackfillWorker].backfill?
+    assert BackfillWorker.schedule.backfill?
   end
 end

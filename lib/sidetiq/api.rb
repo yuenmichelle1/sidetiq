@@ -3,12 +3,12 @@ module Sidetiq
   module API
     # Public: Returns an Array of workers including Sidetiq::Schedulable.
     def workers
-      schedules.keys
+      Sidetiq::Schedulable.subclasses(true)
     end
 
     # Public: Returns a Hash of Sidetiq::Schedule instances.
     def schedules
-      clock.schedules.dup
+      workers.map(&:schedule)
     end
 
     # Public: Currently scheduled recurring jobs.

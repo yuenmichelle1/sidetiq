@@ -3,18 +3,20 @@ module Sidetiq
     include Logging
     include Sidekiq::ExceptionHandler
 
-    def dispatch(worker, sched, tick)
-      return unless sched.schedule_next?(tick)
+    def dispatch(worker, tick)
+      schedule = worker.schedule
+
+      return unless schedule.schedule_next?(tick)
 
       Lock::Redis.new(worker).synchronize do |redis|
-        if sched.backfill? && (last = worker.last_scheduled_occurrence) > 0
+        if schedule.backfill? && (last = worker.last_scheduled_occurrence) > 0
           last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
-          sched.occurrences_between(last + 1, tick).each do |past_t|
+          schedule.occurrences_between(last + 1, tick).each do |past_t|
             enqueue(worker, past_t, redis)
           end
         end
 
-        enqueue(worker, sched.next_occurrence(tick), redis)
+        enqueue(worker, schedule.next_occurrence(tick), redis)
       end
     rescue StandardError => e
       handle_exception(e, context: "Sidetiq::Handler#dispatch")

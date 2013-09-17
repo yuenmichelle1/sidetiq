@@ -18,6 +18,7 @@ class TestClock < Sidetiq::TestCase
 
   def test_backfilling
     BackfillWorker.jobs.clear
+    Sidetiq.stubs(:workers).returns([BackfillWorker])
     start = Sidetiq::Schedule::START_TIME
 
     BackfillWorker.stubs(:last_scheduled_occurrence).returns(start.to_f)
@@ -32,10 +33,7 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_by_schedule
-    schedule = Sidetiq::Schedule.new
-    schedule.daily
-
-    clock.stubs(:schedules).returns(SimpleWorker => schedule)
+    Sidetiq.stubs(:workers).returns([SimpleWorker])
 
     SimpleWorker.expects(:perform_at).times(10)
 
@@ -51,13 +49,11 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_with_default_last_tick_arg_on_first_run
-    schedule = Sidetiq::Schedule.new
-    schedule.hourly
-
     time = Time.local(2011, 1, 1, 1, 30)
 
     clock.stubs(:gettime).returns(time, time + 3600)
-    clock.stubs(:schedules).returns(LastTickWorker => schedule)
+
+    Sidetiq.stubs(:workers).returns([LastTickWorker])
 
     expected_first_tick = time + 1800
     expected_second_tick = expected_first_tick + 3600
@@ -71,13 +67,11 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_with_last_run_timestamp_and_next_run_timestamp
-    schedule = Sidetiq::Schedule.new
-    schedule.hourly
-
     time = Time.local(2011, 1, 1, 1, 30)
 
     clock.stubs(:gettime).returns(time, time + 3600)
-    clock.stubs(:schedules).returns(LastAndScheduledTicksWorker => schedule)
+
+    Sidetiq.stubs(:workers).returns([LastAndScheduledTicksWorker])
 
     expected_first_tick = time + 1800
     expected_second_tick = expected_first_tick + 3600
@@ -95,13 +89,11 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_with_last_run_timestamp_if_optional_argument
-    schedule = Sidetiq::Schedule.new
-    schedule.hourly
-
     time = Time.local(2011, 1, 1, 1, 30)
 
     clock.stubs(:gettime).returns(time, time + 3600)
-    clock.stubs(:schedules).returns(OptionalArgumentWorker => schedule)
+
+    Sidetiq.stubs(:workers).returns([OptionalArgumentWorker])
 
     expected_first_tick = time + 1800
 
@@ -111,13 +103,11 @@ class TestClock < Sidetiq::TestCase
   end
 
   def test_enqueues_jobs_correctly_for_splat_args_perform_methods
-    schedule = Sidetiq::Schedule.new
-    schedule.hourly
-
     time = Time.local(2011, 1, 1, 1, 30)
 
     clock.stubs(:gettime).returns(time, time + 3600)
-    clock.stubs(:schedules).returns(SplatArgsWorker => schedule)
+
+    Sidetiq.stubs(:workers).returns([SplatArgsWorker])
 
     expected_first_tick = time + 1800
 

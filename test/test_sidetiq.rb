@@ -4,13 +4,11 @@ class TestSidetiq < Sidetiq::TestCase
   def test_schedules
     schedules = Sidetiq.schedules
 
-    assert_equal 2, schedules.length
+    assert_includes schedules, ScheduledWorker.schedule
+    assert_includes schedules, BackfillWorker.schedule
 
-    assert_includes schedules.keys, ScheduledWorker
-    assert_includes schedules.keys, BackfillWorker
-
-    assert_kind_of Sidetiq::Schedule, schedules[ScheduledWorker]
-    assert_kind_of Sidetiq::Schedule, schedules[BackfillWorker]
+    assert_kind_of Sidetiq::Schedule, ScheduledWorker.schedule
+    assert_kind_of Sidetiq::Schedule, BackfillWorker.schedule
   end
 
   def test_workers
@@ -18,7 +16,6 @@ class TestSidetiq < Sidetiq::TestCase
 
     assert_includes workers, ScheduledWorker
     assert_includes workers, BackfillWorker
-    assert_equal 2, workers.length
   end
 
   def test_scheduled
