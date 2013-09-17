@@ -5,10 +5,10 @@ module Sidetiq
     MAJOR = 0
 
     # Public: Sidetiq minor version number.
-    MINOR = 3
+    MINOR = 4
 
     # Public: Sidetiq patch level.
-    PATCH = 7
+    PATCH = 0
 
     # Public: Sidetiq version suffix.
     SUFFIX = 'rc1'
