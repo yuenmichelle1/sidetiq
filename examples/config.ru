@@ -3,6 +3,7 @@ require 'sidetiq'
 
 require 'sidekiq/web'
 require 'sidetiq/web'
+require 'sidetiq/lock/watcher'
 
 require './workers/simple.rb'
 require './workers/failing.rb'

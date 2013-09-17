@@ -29,6 +29,13 @@ module Sidetiq
     config.lock_expire = 1000
     config.utc = false
     config.handler_pool_size = 5
+
+    config.lock = OpenStruct.new.tap do |lock|
+      lock.watcher = OpenStruct.new.tap do |watcher|
+        watcher.remove_lock = false
+        watcher.notify = true
+      end
+    end
   end
 end
 

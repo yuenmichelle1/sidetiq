@@ -2,6 +2,7 @@
 
 require 'sidekiq'
 require 'sidetiq'
+require 'sidetiq/lock/watcher'
 
 require_relative 'workers/simple'
 require_relative 'workers/failing'
