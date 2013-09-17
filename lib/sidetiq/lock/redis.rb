@@ -36,7 +36,7 @@ module Sidetiq
       end
 
       def meta_data
-        Sidekiq.redis do |redis|
+        @meta_data ||= Sidekiq.redis do |redis|
           MetaData.from_json(redis.get(key))
         end
       end
