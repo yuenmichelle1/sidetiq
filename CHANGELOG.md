@@ -1,6 +1,8 @@
 0.4.0
 -----
 
+- Fix bug where web dashboard wouldn't render when in presence of a
+  worker without a schedule.
 - Schedulable#tiq deprecation warning removed.
 - Schedules are now stored on the workers directly instead of in a
   pseudo-global, mutable Hash.
