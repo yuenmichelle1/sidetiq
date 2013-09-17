@@ -1,4 +1,4 @@
-Sidetiq.logger.warn "Sidetiq::Lock::Watcher is experimental and the behavior and API may change in future version."
+Sidetiq.logger.warn "Sidetiq::Lock::Watcher is experimental and the behavior and API may change in a future version."
 
 module Sidetiq
   configure do |config|
