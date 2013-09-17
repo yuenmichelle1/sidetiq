@@ -26,7 +26,12 @@
             <a href="<%= "#{root_path}sidetiq/#{worker.name}/schedule" %>"><%= worker.name %></a>
             <td><%= worker.get_sidekiq_options["queue"] %></td>
             <td>
+              <% @next = schedule.next_occurrence(@time) %>
+              <% if @next.nil? %>
+              No schedule
+              <% else %>
               <%= relative_time(schedule.next_occurrence(@time)) %>
+              <% end %>
             </td>
             <td>
               <form action="<%= "#{root_path}sidetiq/#{worker.name}/trigger" %>" method="post">
@@ -39,9 +44,6 @@
       <% else %>
       <div class="alert alert-success">No recurring jobs found.</div>
       <% end %>
-
     </div>
   </div>
 </div>
-
-
