@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'sinatra'
   gem.add_development_dependency 'mocha'
   gem.add_development_dependency 'rack-test'
+  gem.add_development_dependency 'minitest', '~> 5.0.7'
 
   if RUBY_PLATFORM != "java"
     gem.add_development_dependency 'coveralls'

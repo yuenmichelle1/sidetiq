@@ -3,12 +3,12 @@ if RUBY_PLATFORM != "java"
   Coveralls.wear!
 end
 
-require 'minitest/autorun'
-require 'mocha/setup'
-require 'rack/test'
-
 require 'sidekiq'
 require 'sidekiq/testing'
+
+require 'minitest'
+require 'mocha/setup'
+require 'rack/test'
 
 require 'sidetiq'
 require 'sidetiq/web'
@@ -45,7 +45,7 @@ class Sidekiq::Client
   end
 end
 
-class Sidetiq::TestCase < MiniTest::Unit::TestCase
+class Sidetiq::TestCase < MiniTest::Test
   def setup
     Sidekiq.redis { |r| r.flushall }
   end
@@ -66,3 +66,7 @@ class Sidetiq::TestCase < MiniTest::Unit::TestCase
   end
 end
 
+# Override Celluloid's at_exit hook.
+at_exit {
+  Minitest.run ARGV
+}
