@@ -3,9 +3,15 @@ module Sidetiq
     supervise Sidetiq::Actor::Clock, as: :sidetiq_clock
 
     if Sidekiq.server?
-      pool Sidetiq::Actor::Handler,
-           as: :sidetiq_handler,
-           size: Sidetiq.config.handler_pool_size
+      if handler_pool_size = Sidetiq.config.handler_pool_size
+        pool Sidetiq::Actor::Handler,
+             as: :sidetiq_handler,
+             size: handler_pool_size
+      else
+        # Use Celluloid's CPU-based default.
+        pool Sidetiq::Actor::Handler,
+             as: :sidetiq_handler
+      end
     end
 
     class << self
@@ -24,15 +30,11 @@ module Sidetiq
       def run!
         motd
         info "Sidetiq::Supervisor start"
-
         super
       end
 
       def run
-        motd
-        info "Sidetiq::Supervisor start (foreground)"
-
-        super
+        raise "Sidetiq::Supervisor should not be run in foreground."
       end
 
       private

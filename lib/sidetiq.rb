@@ -24,6 +24,7 @@ require 'sidetiq/version'
 require 'sidetiq/middleware/history'
 
 # actor topology
+require 'sidetiq/actor'
 require 'sidetiq/actor/clock'
 require 'sidetiq/actor/handler'
 require 'sidetiq/supervisor'

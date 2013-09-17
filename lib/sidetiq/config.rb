@@ -28,7 +28,7 @@ module Sidetiq
     config.resolution = 1
     config.lock_expire = 1000
     config.utc = false
-    config.handler_pool_size = 5
+    config.handler_pool_size = nil
   end
 end
 

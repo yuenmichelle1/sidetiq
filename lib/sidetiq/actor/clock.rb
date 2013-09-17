@@ -1,12 +1,12 @@
 module Sidetiq
   module Actor
     class Clock < Sidetiq::Clock
-      include Celluloid
+      include Sidetiq::Actor
       include Sidekiq::ExceptionHandler
 
       # Public: Starts the clock loop.
       def start!
-        info "Sidetiq::Clock start"
+        debug "Sidetiq::Clock looping ..."
         loop!
       end
 

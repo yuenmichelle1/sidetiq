@@ -18,6 +18,7 @@ module Sidetiq
       end
     rescue StandardError => e
       handle_exception(e, context: "Sidetiq::Handler#dispatch")
+      raise e
     end
 
     private
@@ -43,6 +44,7 @@ module Sidetiq
       end
     rescue StandardError => e
       handle_exception(e, context: "Sidetiq::Handler#enqueue")
+      raise e
     end
   end
 end
