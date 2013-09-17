@@ -1,6 +1,8 @@
 0.4.0
 -----
 
+- Schedules are now stored on the workers directly instead of in a
+  pseudo-global, mutable Hash.
 - Clock now start looping automatically if `Sidekiq.server?` returns true.
 - Show job history in web extension.
 - Integrate with Sidekiq's exception handling/reporting in critical parts.
