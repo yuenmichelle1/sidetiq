@@ -1,6 +1,15 @@
 Sidetiq.logger.warn "Sidetiq::Lock::Watcher is experimental and the behavior and API may change in future version."
 
 module Sidetiq
+  configure do |config|
+    config.lock = OpenStruct.new.tap do |lock|
+      lock.watcher = OpenStruct.new.tap do |watcher|
+        watcher.remove_lock = false
+        watcher.notify = true
+      end
+    end
+  end
+
   module Lock
     class Watcher
       class StaleLogError < StandardError; end
