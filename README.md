@@ -32,9 +32,11 @@ Overview
 
 Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
+- Cuncurrency using Celluloid actors.
+
 - Flexible DSL based on [ice_cube](http://seejohnrun.github.com/ice_cube/)
 
-- Sidetiq uses a locking mechanism (based on `setnx` and `pexpire`) internally
+- Sidetiq uses a locking mechanism (based on watch/multi/psetex/exec) internally
   so Sidetiq clocks can run in each Sidekiq process without interfering with
   each other (tested with sub-second polling of scheduled jobs by Sidekiq and
   Sidetiq clock rates above 100hz).
@@ -46,6 +48,7 @@ Dependencies
 ------------
 
 - [Sidekiq](http://mperham.github.com/sidekiq/)
+- [Celluloid](http://celluloid.io/) (shared with Sidekiq)
 - [ice_cube](http://seejohnrun.github.com/ice_cube/)
 
 <a name='section_Installation'></a>
@@ -136,17 +139,8 @@ class MyWorker
 end
 ```
 
-To start Sidetiq, simply call `Sidetiq::Clock.start!` in a server specific
-configuration block:
-
-```ruby
-Sidekiq.configure_server do |config|
-  Sidetiq::Clock.start!
-end
-```
-
-Additionally, Sidetiq includes a middleware that will check if the clock
-thread is still alive and restart it if necessary.
+If Sidekiq is running in server-mode, Sidekiq will handle recurring
+jobs automatically.
 
 <a name='section_Backfills''></a>
 Backfills
