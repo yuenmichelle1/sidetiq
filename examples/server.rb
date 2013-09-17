@@ -11,7 +11,3 @@ Sidekiq.logger.level = Logger::DEBUG
 
 Sidekiq.options[:poll_interval] = 1
 
-Sidekiq.configure_server do |config|
-  Sidetiq.clock.start!
-end
-

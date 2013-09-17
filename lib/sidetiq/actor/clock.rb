@@ -4,10 +4,19 @@ module Sidetiq
       include Sidetiq::Actor
       include Sidekiq::ExceptionHandler
 
-      # Public: Starts the clock loop.
+      def initialize(*args, &block)
+        super
+
+        if Sidekiq.server?
+          after(0) do
+            debug "Sidetiq::Clock looping ..."
+            loop!
+          end
+        end
+      end
+
       def start!
-        debug "Sidetiq::Clock looping ..."
-        loop!
+        warn "Sidetiq::Clock#start! is deprecated. Calling it is no longer required."
       end
 
       private
