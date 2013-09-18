@@ -27,7 +27,7 @@ module Sidetiq
         end
       rescue StandardError => e
         handle_exception(e, context: 'Sidetiq::Clock#loop!')
-        retry
+        raise e
       end
 
       def time
