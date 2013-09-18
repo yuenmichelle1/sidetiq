@@ -1,5 +1,5 @@
-Sidetiq
-=======
+![Sidetiq](http://f.cl.ly/items/1W3k0R2V2x3n3S1t1M0B/sidetiq.png)
+=========
 
 [![Build Status](https://travis-ci.org/tobiassvn/sidetiq.png)](https://travis-ci.org/tobiassvn/sidetiq)
 [![Dependency Status](https://gemnasium.com/tobiassvn/sidetiq.png)](https://gemnasium.com/tobiassvn/sidetiq)
