@@ -21,6 +21,8 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 
 - Web extension with extensive monitoring of recurring jobs.
 
+- Sidetiq runs within your Sidekiq processes. No extra resources required.
+
 Usage
 -----
 
