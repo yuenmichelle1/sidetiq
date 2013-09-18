@@ -3,6 +3,14 @@ module Sidetiq
   class Clock
     include Logging
 
+    def self.start!
+      warn "Sidetiq::Clock#start! is deprecated. Calling it is no longer required."
+    end
+
+    def start!
+      warn "Sidetiq::Clock#start! is deprecated. Calling it is no longer required."
+    end
+
     # Internal: Returns a hash of Sidetiq::Schedule instances.
     attr_reader :schedules
 

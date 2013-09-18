@@ -15,10 +15,6 @@ module Sidetiq
         end
       end
 
-      def start!
-        warn "Sidetiq::Clock#start! is deprecated. Calling it is no longer required."
-      end
-
       private
 
       def loop!
