@@ -11,7 +11,7 @@ module Sidetiq
     PATCH = 0
 
     # Public: Sidetiq version suffix.
-    SUFFIX = 'rc4'
+    SUFFIX = nil
 
     # Public: String representation of the current Sidetiq version.
     STRING = [MAJOR, MINOR, PATCH, SUFFIX].compact.join('.')
