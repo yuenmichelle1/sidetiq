@@ -42,8 +42,7 @@ module Sidetiq
     #   # => Hash of Sidetiq::Schedule objects
     #
     # Returns a hash of Sidetiq::Schedule instances.
-    def tick
-      tick = gettime
+    def tick(tick = gettime)
       Sidetiq.workers.each do |worker|
         Sidetiq.handler.dispatch(worker, tick)
       end
