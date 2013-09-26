@@ -1,3 +1,9 @@
+0.4.1
+-----
+
+- Use Sidekiq's JSON wrappers instead of the json gem directly.
+- Allow tick used by Clock#tick to be overridden.
+
 0.4.0
 -----
 
