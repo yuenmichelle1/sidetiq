@@ -19,7 +19,7 @@
         </thead>
 
         <% @history.each do |entry| %>
-        <% entry = JSON.parse(entry, symbolize_names: true) %>
+        <% entry = Sidekiq.load_json(entry).symbolize_keys %>
         <tr class="<%= 'error' if entry[:status] == 'failure' %>">
           <td><%= entry[:status].capitalize %></td>
           <td><%= Time.parse(entry[:timestamp]).strftime("%m/%d/%Y %I:%M:%S%p") %></td>

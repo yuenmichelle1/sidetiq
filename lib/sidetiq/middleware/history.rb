@@ -41,7 +41,7 @@ module Sidetiq
         Sidekiq.redis do |redis|
           list_name = "sidetiq:#{worker.class.name}:history"
 
-          redis.lpush(list_name, JSON.dump(entry))
+          redis.lpush(list_name, Sidekiq.dump_json(entry))
           redis.ltrim(list_name, 0, Sidetiq.config.worker_history - 1)
         end
       end

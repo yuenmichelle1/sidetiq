@@ -13,12 +13,12 @@ module Sidetiq
         end
 
         def from_json(json = "")
-          # Avoid TypeError when nil is passed to JSON.parse.
+          # Avoid TypeError when nil is passed to Sidekiq.load_json.
           json = "" if json.nil?
 
-          hash = JSON.parse(json, symbolize_names: true)
+          hash = Sidekiq.load_json(json).symbolize_keys
           new(hash)
-        rescue JSON::ParserError => e
+        rescue StandardError => e
           if json != ""
             # Looks like garbage lock metadata, so report it.
             handle_exception(e, context: "Garbage lock meta data detected: #{json}")

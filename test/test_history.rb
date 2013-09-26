@@ -13,7 +13,7 @@ class TestHistory < Sidetiq::TestCase
       redis.lrange('sidetiq:TestHistory::HistoryWorker:history', 0, -1)
     end
 
-    actual = JSON.parse(entry[0], symbolize_names: true)
+    actual = Sidekiq.load_json(entry[0]).symbolize_keys
 
     assert_equal 'success', actual[:status]
 
@@ -37,7 +37,7 @@ class TestHistory < Sidetiq::TestCase
       redis.lrange('sidetiq:TestHistory::HistoryWorker:history', 0, -1)
     end
 
-    actual = JSON.parse(entry[0], symbolize_names: true)
+    actual = Sidekiq.load_json(entry[0]).symbolize_keys
 
     assert_equal 'failure', actual[:status]
 

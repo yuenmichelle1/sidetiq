@@ -78,7 +78,7 @@ class TestLockMetaData < Sidetiq::TestCase
     hash = { timestamp: 42, owner: "me", key: "foobar" }
     md = Sidetiq::Lock::MetaData.new(hash)
 
-    assert_equal hash, JSON.parse(md.to_json, symbolize_names: true)
+    assert_equal hash, Sidekiq.load_json(md.to_json).symbolize_keys
   end
 
   def test_to_s
