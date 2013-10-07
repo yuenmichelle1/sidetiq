@@ -1,3 +1,8 @@
+0.4.2
+-----
+
+- Fix styling for Bootstrap 3 [manuelmeurer]
+
 0.4.1
 -----
 

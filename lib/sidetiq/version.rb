@@ -8,7 +8,7 @@ module Sidetiq
     MINOR = 4
 
     # Public: Sidetiq patch level.
-    PATCH = 1
+    PATCH = 2
 
     # Public: Sidetiq version suffix.
     SUFFIX = nil
