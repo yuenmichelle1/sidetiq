@@ -1,3 +1,8 @@
+0.4.3
+-----
+
+- Various web UI fixes. [manuelmeurer]
+
 0.4.2
 -----
 
