@@ -35,7 +35,7 @@ class Sidekiq::Client
   # Sidekiq testing helper now overwrites raw_push so we need to use
   # raw_push_old below to keep tests as is.
   # https://github.com/mperham/sidekiq/blob/master/lib/sidekiq/testing.rb
-  def self.push_old(item)
+  def push_old(item)
     normed = normalize_item(item)
     payload = process_single(item['class'], normed)
 
