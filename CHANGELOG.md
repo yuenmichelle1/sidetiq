@@ -2,6 +2,7 @@
 -----
 
 - Relax Sidekiq dependency. [leemhenson]
+ 
 0.4.3
 -----
 
