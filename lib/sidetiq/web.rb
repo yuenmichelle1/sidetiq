@@ -8,13 +8,13 @@ module Sidetiq
       app.get "/sidetiq" do
         @workers = Sidetiq.workers
         @time = Sidetiq.clock.gettime
-        erb File.read(File.join(VIEWS, 'sidetiq.erb'))
+        erb File.read(File.join(VIEWS, 'sidetiq.erb')), locals: {view_path: VIEWS}
       end
 
       app.get "/sidetiq/locks" do
         @locks = Sidetiq::Lock::Redis.all.map(&:meta_data)
 
-        erb File.read(File.join(VIEWS, 'locks.erb'))
+        erb File.read(File.join(VIEWS, 'locks.erb')), locals: {view_path: VIEWS}
       end
 
       app.get "/sidetiq/:name/schedule" do
@@ -28,7 +28,7 @@ module Sidetiq
 
         @schedule = @worker.schedule
 
-        erb File.read(File.join(VIEWS, 'schedule.erb'))
+        erb File.read(File.join(VIEWS, 'schedule.erb')), locals: {view_path: VIEWS}
       end
 
       app.get "/sidetiq/:name/history" do
@@ -44,7 +44,7 @@ module Sidetiq
           redis.lrange("sidetiq:#{name}:history", 0, -1)
         end
 
-        erb File.read(File.join(VIEWS, 'history.erb'))
+        erb File.read(File.join(VIEWS, 'history.erb')), locals: {view_path: VIEWS}
       end
 
       app.post "/sidetiq/:name/trigger" do

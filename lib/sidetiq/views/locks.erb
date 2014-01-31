@@ -1,4 +1,4 @@
-<%= File.read(File.join(File.dirname(__FILE__), 'views', 'assets', 'styles.css')) %>
+<%= File.read(File.join(view_path, 'assets', 'styles.css')) %>
 
 <header class="row">
   <div class="col-md-5">
@@ -8,7 +8,7 @@
 
 <div class="container">
   <div class="row">
-    <%= erb File.read(File.join(File.dirname(__FILE__), 'views', '_home_nav.erb')) %>
+    <%= erb File.read(File.join(view_path, '_home_nav.erb')) %>
 
     <div class="col-md-9">
       <% if @locks.length > 0 %>
