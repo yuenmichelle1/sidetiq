@@ -1,3 +1,5 @@
+require 'sidekiq/exception_handler'
+
 module Sidetiq
   class Handler
     include Logging
