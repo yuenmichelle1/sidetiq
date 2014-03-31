@@ -19,7 +19,7 @@ class TestClock < Sidetiq::TestCase
   def test_backfilling
     BackfillWorker.jobs.clear
     Sidetiq.stubs(:workers).returns([BackfillWorker])
-    start = Sidetiq::Schedule::START_TIME
+    start = Sidetiq::Schedule.start_time
 
     BackfillWorker.stubs(:last_scheduled_occurrence).returns(start.to_f)
     clock.stubs(:gettime).returns(start)

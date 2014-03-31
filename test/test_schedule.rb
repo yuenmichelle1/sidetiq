@@ -34,5 +34,12 @@ class TestSchedule < Sidetiq::TestCase
     sched.set_options(backfill: false)
     refute sched.backfill?
   end
+
+  def test_use_utc
+    Sidetiq.config.utc = true
+    assert_equal(Time.utc(2010, 01, 01), Sidetiq::Schedule.new.start_time)
+  ensure
+    Sidetiq.config.utc = false
+  end
 end
 
