@@ -6,7 +6,7 @@ module Sidetiq
 
     def self.registered(app)
       app.get "/sidetiq" do
-        @workers = Sidetiq.workers
+        @workers = Sidetiq.workers.sort_by { |worker| worker.name }
         @time = Sidetiq.clock.gettime
         erb File.read(File.join(VIEWS, 'sidetiq.erb')), locals: {view_path: VIEWS}
       end
