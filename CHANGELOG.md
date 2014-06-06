@@ -1,3 +1,9 @@
+0.6.1
+-----
+
+- Fix manual triggering of jobs with #perform arguments.
+- Require 'sidetiq' in 'sidetiq/web'.
+
 0.6.0
 -----
 
