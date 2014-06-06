@@ -1,3 +1,4 @@
+require 'sidetiq'
 require 'sidekiq/web'
 
 module Sidetiq
