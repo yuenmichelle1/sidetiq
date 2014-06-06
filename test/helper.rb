@@ -12,7 +12,6 @@ require 'rack/test'
 
 require 'sidetiq'
 require 'sidetiq/web'
-require 'sidetiq/lock/watcher'
 
 class Sidetiq::Supervisor
   def self.clock
