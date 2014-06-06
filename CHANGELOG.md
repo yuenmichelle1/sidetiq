@@ -1,8 +1,19 @@
+0.6.0
+-----
+
+- Explicitly require Sidekiq::ExceptionHandler [gglider]
+- Fix config.utc [gglider]
+- Add Ruby 2.1.1 to travix [gglider]
+- Bump ice_cube dependency to 0.12.0 [toolmantim]
+- Sort workers index page in web dashboard by name [oestrich]
+- Reseting cached times when recurrence changes [LongMan]
+- Move CSS to external files [futhr]
+
 0.5.0
 -----
 
 - Relax Sidekiq dependency. [leemhenson]
- 
+
 0.4.3
 -----
 
