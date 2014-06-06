@@ -19,6 +19,10 @@ jdk:
   - oraclejdk7
 matrix:
   exclude:
+    - rvm: 2.1.1
+      jdk: openjdk7
+    - rvm: 2.1.1
+      jdk: openjdk6
     - rvm: 2.0.0
       jdk: openjdk7
     - rvm: 2.0.0
