@@ -58,7 +58,7 @@ module Sidetiq
       end
 
       def get_schedulable_keys
-        schedulable_redis.keys("sidetiq:#{name}:*")
+        %w(next last schedule_description history).map { |key| "sidetiq:#{name}:#{key}" }
       end
 
       def get_schedulable_key(key)
