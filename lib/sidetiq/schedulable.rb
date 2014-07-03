@@ -38,6 +38,8 @@ module Sidetiq
       end
 
       def recurrence(options = {}, &block) # :nodoc:
+        return unless Sidekiq.server?
+
         schedule.instance_eval(&block)
         schedule.set_options(options)
 
@@ -45,28 +47,23 @@ module Sidetiq
         old_description = get_schedulable_key("schedule_description")
         if old_description != schedule.to_s
           get_schedulable_keys.map do |key|
-            schedulable_redis.del(key)
+            Sidekiq.redis_pool.with { |r| r.del(key) }
           end
           set_schedulable_key("schedule_description", schedule.to_s)
         end
       end
 
       private
-
-      def schedulable_redis
-        Sidekiq.redis { |redis| redis }
-      end
-
       def get_schedulable_keys
-        schedulable_redis.keys("sidetiq:#{name}:*")
+        Sidekiq.redis_pool.with { |r| r.keys("sidetiq:#{name}:*") }
       end
 
       def get_schedulable_key(key)
-        schedulable_redis.get("sidetiq:#{name}:#{key}")
+        Sidekiq.redis_pool.with { |r| r.get("sidetiq:#{name}:#{key}") }
       end
 
       def set_schedulable_key(key, value)
-        schedulable_redis.set("sidetiq:#{name}:#{key}", value)
+        Sidekiq.redis_pool.with { |r| r.set("sidetiq:#{name}:#{key}", value) }
       end
 
       def get_timestamp(key)
@@ -83,4 +80,3 @@ module Sidetiq
     end
   end
 end
-

@@ -13,6 +13,12 @@ require 'rack/test'
 require 'sidetiq'
 require 'sidetiq/web'
 
+module Sidekiq
+  def self.server?
+    true
+  end
+end
+
 class Sidetiq::Supervisor
   def self.clock
     @clock ||= Sidetiq::Clock.new

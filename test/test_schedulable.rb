@@ -1,8 +1,23 @@
 require_relative 'helper'
+require 'minitest/mock'
 
 class TestShedulable < Sidetiq::TestCase
   class FakeWorker
     include Sidetiq::Schedulable
+  end
+
+  def test_recurrence
+    Sidekiq.stub(:server?, true) do
+      Sidekiq.expects(:redis_pool).returns(Sidekiq::RedisConnection.create).at_least(1)
+
+      FakeWorker.recurrence { hourly }
+    end
+
+    Sidekiq.stub(:server?, false) do
+      Sidekiq.expects(:redis_pool).times(0)
+
+      FakeWorker.recurrence { hourly }
+    end
   end
 
   def test_resheduling
