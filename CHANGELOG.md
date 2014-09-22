@@ -3,6 +3,7 @@
 
 - Lock ice cube to 0.11.1 to fix memory leaks [camjackson]
 - Don't use Redis keys command [Connorhd ]
+- Use Sidekiq.redis_pool in Schedulable [nkondratyev]
 
 0.6.1
 -----
