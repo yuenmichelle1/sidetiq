@@ -38,8 +38,6 @@ module Sidetiq
       end
 
       def recurrence(options = {}, &block) # :nodoc:
-        return unless Sidekiq.server?
-
         schedule.instance_eval(&block)
         schedule.set_options(options)
 
