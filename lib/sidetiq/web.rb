@@ -13,7 +13,12 @@ module Sidetiq
       end
 
       app.get "/sidetiq/locks" do
-        @locks = Sidetiq::Lock::Redis.all.map(&:meta_data)
+        begin
+          @locks = Sidetiq::Lock::Redis.all.map(&:meta_data)
+          @locks_available = true
+        rescue Redis::CommandError
+          @locks_available = false
+        end
 
         erb File.read(File.join(VIEWS, 'locks.erb')), locals: {view_path: VIEWS}
       end
