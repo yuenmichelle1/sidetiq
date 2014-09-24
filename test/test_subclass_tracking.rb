@@ -1,7 +1,10 @@
 require_relative 'helper'
 
 class TestSubclassTracking < Sidetiq::TestCase
-  class Foo
+  class Base
+  end
+
+  class Foo < Base
     extend Sidetiq::SubclassTracking
   end
 
