@@ -1,3 +1,10 @@
+0.6.3
+-----
+
+- Don't pass classes without #perform defined to handler
+- Don't try to connect to redis from Schduleable unless
+  Sidekiq.server? returns true.
+
 0.6.2
 -----
 
