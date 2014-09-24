@@ -1,9 +1,13 @@
 module Sidetiq
   # Public: Sidetiq API methods.
   module API
-    # Public: Returns an Array of workers including Sidetiq::Schedulable.
+    # Public: Returns an Array of workers including
+    # Sidetiq::Schedulable. Excludes classes which don't define
+    # a #perform method.
     def workers
-      Sidetiq::Schedulable.subclasses(true)
+      Sidetiq::Schedulable.subclasses(true).select do |klass|
+        klass.method_defined?(:perform)
+      end
     end
 
     # Public: Returns a Hash of Sidetiq::Schedule instances.
