@@ -42,12 +42,14 @@ module Sidetiq
         schedule.set_options(options)
 
         # deleting schedulable keys if schedule changed since last reccurence definition
-        old_description = get_schedulable_key("schedule_description")
-        if old_description != schedule.to_s
-          get_schedulable_keys.map do |key|
-            Sidekiq.redis_pool.with { |r| r.del(key) }
+        if Sidekiq.server?
+          old_description = get_schedulable_key("schedule_description")
+          if old_description != schedule.to_s
+            get_schedulable_keys.map do |key|
+              Sidekiq.redis_pool.with { |r| r.del(key) }
+            end
+            set_schedulable_key("schedule_description", schedule.to_s)
           end
-          set_schedulable_key("schedule_description", schedule.to_s)
         end
       end
 
