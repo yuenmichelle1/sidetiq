@@ -1,6 +1,8 @@
 0.6.4
 -----
 
+- Display the runtime of each job on the history page
+  [allenan]
 - Use Time.current instead of Time.now in rails apps to
   respect configured timezone [effektz]
 - Handle csrf_tag [kcdragon]
