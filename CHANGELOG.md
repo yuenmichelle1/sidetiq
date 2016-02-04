@@ -3,6 +3,9 @@
 
 - Use Time.current instead of Time.now in rails apps to
   respect configured timezone [effektz]
+- Handle csrf_tag [kcdragon]
+- Celluloid update related fixes [sfroehler]
+- Updated gem dependencies
 
 0.6.3
 -----
