@@ -1,4 +1,4 @@
-0.6.4
+0.7.0
 -----
 
 - Display the runtime of each job on the history page
