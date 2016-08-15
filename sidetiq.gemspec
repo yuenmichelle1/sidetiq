@@ -19,9 +19,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.extensions    = []
 
-  gem.add_dependency 'sidekiq',   '>= 4.0.0'
+  gem.add_dependency 'sidekiq',   '>= 4.1.0'
   gem.add_dependency 'celluloid', '>= 0.17.3'
-  gem.add_dependency 'ice_cube',  '~> 0.13.2'
+  gem.add_dependency 'ice_cube',  '~> 0.14.0'
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'sinatra'
