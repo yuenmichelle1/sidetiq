@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/endofunky/sidetiq.png)](https://travis-ci.org/endofunky/sidetiq)
 [![Dependency Status](https://gemnasium.com/endofunky/sidetiq.png)](https://gemnasium.com/endofunky/sidetiq)
-[![Coverage Status](https://coveralls.io/repos/endofunky/sidetiq/badge.png)](https://coveralls.io/r/endofunky/sidetiq)
+[![Coverage Status](https://coveralls.io/repos/github/endofunky/sidetiq/badge.svg?branch=master)](https://coveralls.io/github/endofunky/sidetiq?branch=master)
 [![Code Climate](https://codeclimate.com/github/endofunky/sidetiq.png)](https://codeclimate.com/github/endofunky/sidetiq)
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
