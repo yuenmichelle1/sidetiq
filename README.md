@@ -1,10 +1,10 @@
 ![Sidetiq](http://f.cl.ly/items/1W3k0R2V2x3n3S1t1M0B/sidetiq.png)
 =========
 
-[![Build Status](https://travis-ci.org/tobiassvn/sidetiq.png)](https://travis-ci.org/tobiassvn/sidetiq)
-[![Dependency Status](https://gemnasium.com/tobiassvn/sidetiq.png)](https://gemnasium.com/tobiassvn/sidetiq)
-[![Coverage Status](https://coveralls.io/repos/tobiassvn/sidetiq/badge.png)](https://coveralls.io/r/tobiassvn/sidetiq)
-[![Code Climate](https://codeclimate.com/github/tobiassvn/sidetiq.png)](https://codeclimate.com/github/tobiassvn/sidetiq)
+[![Build Status](https://travis-ci.org/endofunky/sidetiq.png)](https://travis-ci.org/endofunky/sidetiq)
+[![Dependency Status](https://gemnasium.com/endofunky/sidetiq.png)](https://gemnasium.com/endofunky/sidetiq)
+[![Coverage Status](https://coveralls.io/repos/endofunky/sidetiq/badge.png)](https://coveralls.io/r/endofunky/sidetiq)
+[![Code Climate](https://codeclimate.com/github/endofunky/sidetiq.png)](https://codeclimate.com/github/endofunky/sidetiq)
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 
@@ -26,7 +26,7 @@ Sidetiq provides a simple API for defining recurring workers for Sidekiq.
 Usage
 -----
 
-Please see the [Sidetiq wiki](http://github.com/tobiassvn/sidetiq/wiki) for more detailed
+Please see the [Sidetiq wiki](http://github.com/endofunky/sidetiq/wiki) for more detailed
 documentation and usage notes.
 
 License
@@ -37,5 +37,5 @@ Sidetiq is released under the 3-clause BSD. See LICENSE for further details.
 Author
 ------
 
-Tobias Svensson, [@tobiassvn](https://twitter.com/tobiassvn), [http://github.com/tobiassvn](http://github.com/tobiassvn)
+Tobias Svensson, [@endofunky](https://twitter.com/endofunky), [http://github.com/endofunky](http://github.com/endofunky)
 

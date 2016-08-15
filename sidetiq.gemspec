@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["tob@tobiassvensson.co.uk"]
   gem.description   = "Recurring jobs for Sidekiq"
   gem.summary       = gem.description
-  gem.homepage      = "http://github.com/tobiassvn/sidetiq"
+  gem.homepage      = "http://github.com/endofunky/sidetiq"
   gem.license       = "3-clause BSD"
 
   gem.files         = `git ls-files`.split($/)
