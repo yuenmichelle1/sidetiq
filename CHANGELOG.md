@@ -1,3 +1,15 @@
+0.7.2
+-----
+
+- Fix NoMethodError with nil value in variable in web
+  dashboard [tmartyny]
+
+0.7.1
+-----
+
+- Remove unnecessary linking to Sidekiq::Manager
+- Updated gem dependencies
+
 0.7.0
 -----
 
