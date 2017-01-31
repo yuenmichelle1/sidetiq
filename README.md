@@ -8,6 +8,10 @@
 
 Recurring jobs for [Sidekiq](http://mperham.github.com/sidekiq/).
 
+## NO LONGER MAINTAINED!!!
+
+Due to changes in Sidekiq (which would necessitate an almost complete rewrite) and the move to the ActiveJob abstraction this library is no longer maintained. Please refer to alternatives instead.
+
 Overview
 --------
 
