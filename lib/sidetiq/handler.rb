@@ -10,6 +10,7 @@ module Sidetiq
       return unless schedule.schedule_next?(tick)
       debug "Handler After Schedule.next"
       Lock::Redis.new(worker).synchronize do |redis|
+        debug "Redis IN DISPATCH IN HANDLER #{redis}"
         if schedule.backfill? && (last = worker.last_scheduled_occurrence) > 0
           debug "Handler in backfill conditional"
           last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
@@ -21,6 +22,7 @@ module Sidetiq
         enqueue(worker, schedule.next_occurrence(tick), redis)
       end
     rescue StandardError => e
+      debug "Error in Handler #{e}"
       handle_exception(e, context: "Sidetiq::Handler#dispatch")
       raise e
     end

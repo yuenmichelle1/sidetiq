@@ -23,7 +23,7 @@ module Sidetiq
         Sidekiq.redis do |redis|
           debug "Inside Sidekiq.Redis Object within Lock::Redis.synchronize"
           acquired = lock
-          debug "Acquired? within Lock::Redis.synchronize"
+          debug "Acquired? #{acquired} within Lock::Redis.synchronize"
 
           if acquired
             debug "Lock: #{key}"
