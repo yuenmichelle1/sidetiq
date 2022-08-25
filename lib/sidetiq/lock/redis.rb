@@ -62,7 +62,7 @@ module Sidetiq
             debug "Inside WATCH DO in redis.db"
             debug "key #{key}"
             debug "redis exists key? #{redis.exists(key)}"
-            if !redis.exists(key)
+            if !redis.exists?(key)
               debug "Inside !redis exists in redis.rb"
               acquired = !!redis.multi do |multi|
                 debug "Inside acquired equals #{multi} in redis.rb"
