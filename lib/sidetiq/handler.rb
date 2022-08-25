@@ -7,7 +7,6 @@ module Sidetiq
 
     def dispatch(worker, tick)
       schedule = worker.schedule
-      debug "Handler Dispatching Schedule"
       return unless schedule.schedule_next?(tick)
       debug "Handler After Schedule.next"
       Lock::Redis.new(worker).synchronize do |redis|

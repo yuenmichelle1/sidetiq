@@ -19,6 +19,7 @@ module Sidetiq
       end
 
       def synchronize
+        debug "Inside Lock::Redis.synchronize"
         Sidekiq.redis do |redis|
           acquired = lock
 
