@@ -7,17 +7,18 @@ module Sidetiq
 
     def dispatch(worker, tick)
       schedule = worker.schedule
-
+      debug "Handler Dispatching Schedule"
       return unless schedule.schedule_next?(tick)
-
+      debug "Handler After Schedule.next"
       Lock::Redis.new(worker).synchronize do |redis|
         if schedule.backfill? && (last = worker.last_scheduled_occurrence) > 0
+          debug "Handler in backfill conditional"
           last = Sidetiq.config.utc ? Time.at(last).utc : Time.at(last)
           schedule.occurrences_between(last + 1, tick).each do |past_t|
             enqueue(worker, past_t, redis)
           end
         end
-
+        debug "Handler Before WORKER ENQUEUE"
         enqueue(worker, schedule.next_occurrence(tick), redis)
       end
     rescue StandardError => e
