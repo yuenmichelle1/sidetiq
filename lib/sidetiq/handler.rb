@@ -9,6 +9,8 @@ module Sidetiq
       schedule = worker.schedule
       return unless schedule.schedule_next?(tick)
       debug "Handler After Schedule.next"
+      debug "Worker in Handler #{worker}"
+      debug "Check Lock Object WITHIN Handler #{Lock::Redis.new(worker)}"
       Lock::Redis.new(worker).synchronize do |redis|
         debug "Redis IN DISPATCH IN HANDLER #{redis}"
         if schedule.backfill? && (last = worker.last_scheduled_occurrence) > 0

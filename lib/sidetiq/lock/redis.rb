@@ -57,11 +57,14 @@ module Sidetiq
       def lock
         Sidekiq.redis do |redis|
           acquired = false
-
+          debug "INSIDE LOCK Definition in Redis"
           watch(redis, key) do
             if !redis.exists(key)
+              debug "Inside !redis exists in redis.rb"
               acquired = !!redis.multi do |multi|
+                debug "Inside acquired equals #{multi} in redis.rb"
                 meta = MetaData.for_new_lock(key)
+                debug "Inside meta definition #{meta.to_json}"
                 multi.psetex(key, timeout, meta.to_json)
               end
             end
