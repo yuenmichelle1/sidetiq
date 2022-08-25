@@ -32,6 +32,8 @@ module Sidetiq
       time_f   = time.to_f
       next_run = (redis.get("#{key}:next") || -1).to_f
 
+      debug "INSIDE ENQUEUE WITHIN HANDLER"
+
       if next_run < time_f
         info "Enqueue: #{worker.name} (at: #{time_f}) (last: #{next_run})"
 
