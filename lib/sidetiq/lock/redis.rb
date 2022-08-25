@@ -59,6 +59,7 @@ module Sidetiq
           acquired = false
           debug "INSIDE LOCK Definition in Redis"
           watch(redis, key) do
+            debug "Inside WATCH DO in redis.db"
             if !redis.exists(key)
               debug "Inside !redis exists in redis.rb"
               acquired = !!redis.multi do |multi|
@@ -108,6 +109,7 @@ module Sidetiq
       end
 
       def watch(redis, *args)
+        debug "Inside watch in redis.rb #{redis.watch(*args)}"
         redis.watch(*args)
 
         begin
