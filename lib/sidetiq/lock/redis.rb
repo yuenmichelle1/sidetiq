@@ -19,11 +19,8 @@ module Sidetiq
       end
 
       def synchronize
-        debug "Inside Lock::Redis.synchronize"
         Sidekiq.redis do |redis|
-          debug "Inside Sidekiq.Redis Object within Lock::Redis.synchronize"
           acquired = lock
-          debug "Acquired? #{acquired} within Lock::Redis.synchronize"
 
           if acquired
             debug "Lock: #{key}"
@@ -57,17 +54,10 @@ module Sidetiq
       def lock
         Sidekiq.redis do |redis|
           acquired = false
-          debug "INSIDE LOCK Definition in Redis"
           watch(redis, key) do
-            debug "Inside WATCH DO in redis.db"
-            debug "key #{key}"
-            debug "redis exists key? #{redis.exists(key)}"
             if !redis.exists?(key)
-              debug "Inside !redis exists in redis.rb"
               acquired = !!redis.multi do |multi|
-                debug "Inside acquired equals #{multi} in redis.rb"
                 meta = MetaData.for_new_lock(key)
-                debug "Inside meta definition #{meta.to_json}"
                 multi.psetex(key, timeout, meta.to_json)
               end
             end
@@ -111,7 +101,6 @@ module Sidetiq
       end
 
       def watch(redis, *args)
-        debug "Inside watch in redis.rb #{redis.watch(*args)}"
         redis.watch(*args)
 
         begin
